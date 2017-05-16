@@ -80,7 +80,7 @@ doctype: overview
   <div class="col-md-8 col-md-offset-2 text-center">
     <h1 class="h1p">Fast and easy integration with AvaTax</h1>
     <ul class="pipe">
-        <li><a href="/avatax/testing-your-integration">Test your integration</a></li>
+        <li><a href="/tests/testing-your-integration">Test your integration</a></li>
         <li><a href="/certification/avatax/">Integration Checklists</a></li>
     </ul>
   </div>

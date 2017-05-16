@@ -25,6 +25,6 @@ nav_links:
  # - title: Set up your sandbox
  #   path: /avatax/get-started
   #- title: Test your integration
-  #  path: /avatax/testing-your-integration
+  #  path: /tests/testing-your-integration
   #- title: Integration checklists
-  #  path: /avatax/certification
+  #  path: /certification/avatax/
