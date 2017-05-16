@@ -3,7 +3,7 @@ layout: page
 title: AvaTax Certification
 product: avaTax
 doctype: certification
-nav: apis
+nav: certification
 disqus: 1
 ---
 <div class="half">

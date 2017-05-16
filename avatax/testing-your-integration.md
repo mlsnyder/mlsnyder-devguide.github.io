@@ -3,7 +3,7 @@ layout: page
 title: Test
 product: avaTax
 doctype: test_your_integration
-nav: apis
+nav: tests
 disqus: 1
 ---
 
