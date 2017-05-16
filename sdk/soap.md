@@ -71,4 +71,4 @@ The AvaTax SOAP SDK exists for backward compatibility with older software.  User
 
 Submit questions or log bugs using the "Issues" link provided in GitHub.
 
-If you have built libraries or sample code that connects to our services, and would like to showcase them on this site, please send us an email at <a href="">developer@avalara.com.</a>
+If you have built libraries or sample code that connects to our services, and would like to showcase them on this site, please send us an email at <a href="mailto:developer@avalara.com">developer@avalara.com.</a>

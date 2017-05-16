@@ -1,9 +1,10 @@
 ---
-layout: default
+layout: page
 title: AvaTax Certification
 product: avaTax
 doctype: certification
 nav: apis
+disqus: 1
 ---
 <div class="half">
 <h2>Certification for AvaTax Integrations</h2>
