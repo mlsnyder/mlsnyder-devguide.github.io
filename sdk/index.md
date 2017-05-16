@@ -70,4 +70,4 @@ Avalara maintains and publishes SDKs for our current REST v2 API for the followi
 
 Submit questions or log bugs using the "Issues" link provided in GitHub.
 
-If you have built libraries or sample code that connects to our services, and would like to showcase them on this site, please send us an email at developer@avalara.com.
+If you have built libraries or sample code that connects to our services, and would like to showcase them on this site, please send us an email at <a href="">developer@avalara.com.</a>
