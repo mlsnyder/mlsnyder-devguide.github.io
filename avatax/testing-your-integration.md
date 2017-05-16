@@ -4,7 +4,6 @@ title: Test
 product: avaTax
 doctype: test_your_integration
 nav: tests
-disqus: 1
 ---
 
 
