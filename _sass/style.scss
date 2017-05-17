@@ -245,7 +245,9 @@ header {
             &.home li.home,
             &.apis li.apis,
             &.certification li.certification,
-            &.resources li.resources {
+            &.resources li.resources , 
+            &.sdk li.sdk, 
+            &.tests li.tests{
                 background-color: $Darker-Ava-orange;
             }
             .dropdown-large {
