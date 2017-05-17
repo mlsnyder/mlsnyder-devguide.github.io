@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title: AvaTax Software Development Kit
 product: avaTax
 doctype: sdks
