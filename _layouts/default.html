@@ -219,10 +219,25 @@
         {%if page.nav == 'sdk' %} {% include sdk_breadcrumb.html %}
         <section class="row padding-sides half">
             <nav class="col-md-3">
-                {% include sdk_navigation.html %}
+                {% include sdk_navigation.html %} 
             </nav>
             <main class="col-md-9 small-no-padding">{{ content }}</main>
         </section>
+        <!-- I added this to see if it would work -->
+        {% elsif page.nav == 'tests' %}{% include tests_breadcrumb.html %}
+        <section class="row padding-sides half">
+            <nav class="col-md-3">
+                {% include tests_navigation.html %}
+            </nav>
+            <main class="col-md-9 small-no-padding">{{ content }}</main>
+        </section>
+        {% elsif page.nav == 'certification' %} {% if page.title == 'AvaTax Certification' %} 
+        <section class="row padding-sides half">
+            <nav class="col-md-3">
+                {% include avatax_certification_navigation.html %} 
+                </nav>
+            <main class="col-md-9 small-no-padding">{{ content }}</main>
+        </section> {%endif%}
         {% elsif page.nav == 'apis' %} {%if page.doctype != 'overview' %} {% include api_breadcrumb.html %} {%endif%} {% if page.doctype == 'api_references' or page.doctype == 'use_cases' %}
         <section class="row padding-sides{% if page.doctype == 'use_cases' or page.doctype == 'sdks' %} half{% endif %}">
             <nav class="col-md-3">
