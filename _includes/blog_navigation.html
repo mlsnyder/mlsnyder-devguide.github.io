@@ -1,3 +1,5 @@
+
+<h1>Categories</h1>
 <ul class = "api-ref-side-nav nav nav-pills nav-stacked hidden-xs hidden-sm">
     <li {% if page.url=="/blog/" %}class="active" {% endif %}>
         <a href="/blog/">All</a>
@@ -5,9 +7,22 @@
     <li {% if page.url=="/blog/avatax/" %}class="active" {% endif %}>
         <a href="/blog/avatax/">AvaTax</a>
     </li>
-    <!--
-    <li {% if page.url=="/blog/CertCapture/" %}class="active" {% endif %}>
-        <a href="/tests/testing-your-integration/">Avalara Test Cases</a>
-    </li>
+    {% for category in site.categories %}
+        <li><a class="text-uppercase" name="{{ category | first }}">{{ category | first }}</a></li>
+    {% endfor %} 
+    
+    <!-- 
+    {% for category in site.categories %}
+      <li><a name="{{ category | first }}">{{ category | first }}</a>
+        <ul>
+        {% for posts in category %}
+          {% for post in posts %}
+            <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+          {% endfor %}
+        {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
     -->
+
 </ul>
