@@ -1,7 +1,8 @@
 ---
 layout: default
 ---
-
+{% if page.doctype == 'archive' %}
+{% else %}
 {% if page.blog_breadcrumb == 1 or page.doctype == 'blog' %}
 {% include blog_breadcrumb.html %}
     <section class="row padding-sides half">
@@ -22,6 +23,8 @@ layout: default
     </h1>
 {{ content }}
 {% endif %}
+{% endif %}
+
 
 
 
