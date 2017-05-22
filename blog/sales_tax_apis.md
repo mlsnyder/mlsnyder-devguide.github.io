@@ -1,10 +1,12 @@
+<!--
 ---
 layout: page
 title: Sales Tax APIs Posts
 blog_breadcrumb: 1
 nav: resources
+product: blog
 ---
-<!-- this successfully gets the posts from the category that you want -->
+<!-- this successfully gets the posts from the category that you want 
 <div class="row">   
     {% assign p = site.categories.Sales_Tax_APIs %} 
     {% for post in p %} 
@@ -22,3 +24,4 @@ nav: resources
     </div>
     {% endfor %}
 </div>
+-->

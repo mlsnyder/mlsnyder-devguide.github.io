@@ -3,6 +3,7 @@ layout: page
 title: AvaTax Posts
 blog_breadcrumb: 1
 nav: resources
+product: blog
 ---
 {% for category in site.categories %}
   <li><a name="{{ category | first }}">{{ category | first }}</a>
