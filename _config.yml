@@ -83,6 +83,6 @@ jekyll-archives:
   layouts:
     category: archive-tag
   permalinks:
-    category: 'blog/:name/'
+    category: blog/:name/
     
-exclude: [vendor]
+

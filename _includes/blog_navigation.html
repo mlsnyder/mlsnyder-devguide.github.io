@@ -1,14 +1,14 @@
-<h3>Categories</h3>
+<h4>Categories</h4>
 <ul class = "api-ref-side-nav nav nav-pills nav-stacked hidden-xs hidden-sm">
     
     <li {% if page.url=="/blog/" %}class="active" {% endif %}>
-        <a class="text-uppercase" href="/blog/">All</a>
+        <h5><a class="text-uppercase" href="/blog/">All</a></h5>
     </li>
   
     {% for category in site.categories %}
     {% if category[1].size != 1 %}
     <li>
-        <a class="text-uppercase" href="/blog/{{ category[0] }}/">{{ category[0] }}</a>
+        <h5><a class="text-uppercase" href="/blog/{{ category[0] }}/">{{ category[0] }}</a></h5>
     </li>
     {% endif %}
     {% endfor %}

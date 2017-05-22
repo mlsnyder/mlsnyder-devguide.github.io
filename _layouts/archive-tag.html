@@ -13,9 +13,9 @@ doctype: archive
     </nav>
     <main class="col-md-9 small-no-padding">
         {% if page.title == "api" or page.title == "sdk" or page.title == "rest" %}
-            <h2><span class="text-uppercase">{{ page.title }} </span>Posts</h2>
+            <h4><span class="text-uppercase">{{ page.title }} </span>Posts</h4>
         {% else %}
-            <h2><span class="capitalize">{{ page.title }} </span>Posts</h2>
+            <h4><span class="capitalize">{{ page.title }} </span>Posts</h4>
         {% endif %}
         <div class="row">
           {% for post in page.posts %}

@@ -23,16 +23,18 @@ product: blog
 {% endfor %}
 </div>
 
-<ul class="blog-pagination">
-    {% if paginator.previous_page %}
-    <li><a href="{{ paginator.previous_page_path }}" class="previous">Newer</a></li>
-    {% else %}
-    <li class="previous">Newer</li>
-    {% endif %}
-    <li class="page_number">Page {{ paginator.page }} of {{ paginator.total_pages }}</li>
-    {% if paginator.next_page %}
-    <li><a href="{{ paginator.next_page_path }}" class="next">Older</a></li>
-    {% else %}
-    <li class="next">Older</li>
-    {% endif %}
-</ul>
+<h5>
+    <ul class="blog-pagination">
+        {% if paginator.previous_page %}
+        <li><a href="{{ paginator.previous_page_path }}" class="previous">Newer</a></li>
+        {% else %}
+        <li class="previous">Newer</li>
+        {% endif %}
+        <li class="page_number">Page {{ paginator.page }} of {{ paginator.total_pages }}</li>
+        {% if paginator.next_page %}
+        <li><a href="{{ paginator.next_page_path }}" class="next">Older</a></li>
+        {% else %}
+        <li class="next">Older</li>
+        {% endif %}
+    </ul>
+</h5>
