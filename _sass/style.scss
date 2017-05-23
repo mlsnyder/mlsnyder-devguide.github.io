@@ -345,8 +345,9 @@ header {
                     }
                 }
                 input[type="search"] {
-                    color: $Rule-grey;
+                    color: $Darkest-grey;
                     margin-bottom: 5px;
+                    border-collapse: $Rule-grey;
                 }
                 input[type="checkbox"] {
                     border: 16px solid $Rule-grey;
@@ -356,17 +357,6 @@ header {
         }
     }
 }
-
-/* this didn't make any difference */
-/*
-body {
-    font-family: "source sans pro light";
-    font-size: 16px;
-    color: #5f6062;
-    line-height: 24px;
-    
-}
-*/
 
 footer {
     @extend .border-top;
