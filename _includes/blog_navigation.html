@@ -2,15 +2,19 @@
 <ul class = "api-ref-side-nav nav nav-pills nav-stacked hidden-xs hidden-sm">
     
     <li {% if page.url=="/blog/" %}class="active" {% endif %}>
-        <h5><a class="text-uppercase" href="/blog/">All</a></h5>
+        <h5><a class="capitalize" href="/blog/">All</a></h5>
     </li>
   
     {% for category in site.categories %}
         {% if category[1].size != 1 %}
         <li>
-            <h5><a class="text-uppercase" href="/blog/{{ category[0] | replace: ' ', '-'}}/">{{ category[0] }}</a></h5>
+            {% if category[0] == "api" or category[0] == "sdk" or category[0] == "rest" %}
+                <h5><a class="text-uppercase" href="/blog/{{ category[0] | replace: ' ', '-'}}/">{{ category[0] }}</a></h5>
+            {% else %}
+                <h5><a class="capitalize" href="/blog/{{ category[0] | replace: ' ', '-'}}/">{{ category[0] }}</a></h5>
+            {% endif %}
+            
         </li>
         {% endif %}
     {% endfor %}
-
 </ul>
