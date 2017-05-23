@@ -6,11 +6,11 @@
     </li>
   
     {% for category in site.categories %}
-    {% if category[1].size != 1 %}
-    <li>
-        <h5><a class="text-uppercase" href="/blog/{{ category[0] }}/">{{ category[0] }}</a></h5>
-    </li>
-    {% endif %}
+        {% if category[1].size != 1 %}
+        <li>
+            <h5><a class="text-uppercase" href="/blog/{{ category[0] | replace: ' ', '-'}}/">{{ category[0] }}</a></h5>
+        </li>
+        {% endif %}
     {% endfor %}
 
 </ul>

@@ -78,11 +78,12 @@ collections:
     
 ## Jekyll Archives configuration
 jekyll-archives:
-  enabled:
+  enabled: 
     - categories
   layouts:
     category: archive-tag
   permalinks:
-    category: blog/:name/
+    category: 'blog/:name/'
+    
     
 
