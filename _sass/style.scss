@@ -9,6 +9,10 @@
 @import './blog';
 @import './syntax-highlighting';
 
+html, body {
+    overflow-x: hidden;
+}
+
 .mouse {
     cursor: pointer;
 }

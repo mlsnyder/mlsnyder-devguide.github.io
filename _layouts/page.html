@@ -5,7 +5,7 @@ layout: default
 {% else %}
 {% if page.blog_breadcrumb == 1 or page.doctype == 'blog' %}
 {% include blog_breadcrumb.html %}
-    <section class="row padding-sides half">
+    <div class="row padding-sides half">
             <nav class="col-md-3">
                {% include blog_navigation.html %}
             </nav>
@@ -16,7 +16,7 @@ layout: default
                     {{ content }}
 
                 </main>
-        </section> 
+        </div>
     {% else %}
     <h1>{{ page.title }}
         {% if page.subtitle %}<h2>{{ page.subtitle }}</h2>{% endif %}
