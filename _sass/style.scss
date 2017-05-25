@@ -11,9 +11,6 @@
 
 html, body {
     overflow-x: hidden;
-    a {
-        color: $Darkest-blue;
-    }
 }
 
 .mouse {
@@ -28,6 +25,8 @@ html, body {
     font-family: 'source sans pro bold', sans serif;
     font-size: 1.14em;
 }
+
+
 
 .btn-callout {
     padding: 30px 0 60px;
@@ -707,3 +706,5 @@ footer {
         display:block;
     }
 }
+
+
