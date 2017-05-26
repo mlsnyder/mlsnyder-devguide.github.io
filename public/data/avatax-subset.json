@@ -82,7 +82,8 @@
           "in": "query",
           "description": "Line 1",
           "required": false,
-          "type": "string"
+          "type": "string",
+          "example": "123 Main Street"
         }, {
           "name": "line2",
           "in": "query",
@@ -100,25 +101,29 @@
           "in": "query",
           "description": "City",
           "required": false,
-          "type": "string"
+          "type": "string",
+          "example": "Irvine"
         }, {
           "name": "region",
           "in": "query",
           "description": "State / Province / Region",
           "required": false,
-          "type": "string"
+          "type": "string",
+          "example": "CA"
         }, {
           "name": "postalCode",
           "in": "query",
           "description": "Postal Code / Zip Code",
           "required": false,
-          "type": "string"
+          "type": "string",
+          "example": "92615"
         }, {
           "name": "country",
           "in": "query",
           "description": "Two character ISO 3166 Country Code (see /api/v2/definitions/countries for a full list)",
           "required": false,
-          "type": "string"
+          "type": "string",
+          "example" : "US"
         }, {
           "name": "textCase",
           "in": "query",
