@@ -3,7 +3,7 @@ import fs from 'fs';
 import yaml from 'js-yaml';
 import mkdirp from 'mkdirp';
 import SWAGGER_CONFIG from './SWAGGER_CONFIG';
-import buildDefinitions from './build-models-helpers';
+import {buildDefinitions} from './build-models-helpers';
 
 const dataDir = `${__dirname}/../_data/swagger`;
 
@@ -43,7 +43,12 @@ endpoint_links: []
     <tbody>
 `;
 
-    Object.keys(defs).forEach((def) => {
+    Object.keys(defs).sort().forEach((def) => {
+        // skip writing in api model index if its a sub-model
+        if (def.indexOf(' > ') !== -1) {
+            return;
+        }
+
         table = `${table}
         <tr>
             <td><a href="${encodeURIComponent(def)}">${def}</a></td>
@@ -141,6 +146,7 @@ fs.symlink(swagPath, dataPath, function() {
 
             buildHtml(newFilename, allDefinitions, name, product);
         } catch (e) {
+            console.log(`\x1b[31mFailed to write ${key} models \x1b[0m`);
             // Some Swagger_Config files don't exist, or are missing definitions to parse
             // Skip these!
         }
