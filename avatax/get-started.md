@@ -14,6 +14,7 @@ avaform: 1
 </div>
 
 {% include get-started-console.html %}
+{% include api_console_test.html %}
 
 <h4 id="signup"><img src="/public/images/blog/orange-box-2-sm.png" alt="2" /> Create an AvaTax Account</h4>
 
