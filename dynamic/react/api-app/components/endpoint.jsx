@@ -1,6 +1,5 @@
 import React from 'react';
 import ApiConsole from '../../shared/components/apiConsole';
-import AdvApiConsole from '../dist/adv_apiConsole'
 import ApiDocumentation from './apiDocumentation';
 import EndpointExamples from './endpointExamples';
 import ExpanderIcon from './expanderIcon';
