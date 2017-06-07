@@ -3,6 +3,7 @@ import ApiConsole from '../../shared/components/apiConsole';
 import ApiDocumentation from './apiDocumentation';
 import EndpointExamples from './endpointExamples';
 import ExpanderIcon from './expanderIcon';
+import AdvApiConsole from '../../shared/components/advApiConsole';
 
 const replaceSpaces = (str) => str.replace(/\s/g, '');
 
@@ -30,6 +31,26 @@ const EndPointComponent = ({endpoint, apiType, onFillConsoleSampleData, onSubmit
                 </div>
                 <div className={'collapse'} id={`${replaceSpaces(endpoint.operationId)}-console-body`}>
                     <ApiConsole endpoint={endpoint} onAddItemToPostbodyCollection={onAddItemToPostbodyCollection} onFillConsoleSampleData={onFillConsoleSampleData} onPathParamChanged={onPathParamChanged} onPostBodyInputChanged={onPostBodyInputChanged} onQueryParamChanged={onQueryParamChanged} onRemovePostbodyCollectionItem={onRemovePostbodyCollectionItem} onResetConsole={onResetConsole} onSubmitConsoleRequest={onSubmitConsoleRequest} onToggleShowExcludedPostBodyProps={onToggleShowExcludedPostBodyProps} showExcludedPostBodyFields={endpoint.showExcludedPostBodyFields}/>
+                </div>
+
+                {/*this is where the advanced try it now section begins */}
+                <div className={'try-it-now-header'} data-target={`#${replaceSpaces(endpoint.operationId)}-console-body`} data-toggle={'collapse'} id={`${replaceSpaces(endpoint.operationId)}-console`} onClick={
+                    () => {
+                        $(`#${replaceSpaces(endpoint.operationId)}-console-icon`).toggleClass('rotate');
+                        const intervalId = setInterval(() => {
+                            $('#the-nav').affix('checkPosition');
+                        }, 20);
+
+                        setTimeout(() => clearInterval(intervalId), 350);
+                    }
+                }>
+                    <div className={'documentation-expand-icon'} id={`${replaceSpaces(endpoint.operationId)}-console-icon`} style={{display: 'inline-block', marginRight: '5px'}}>
+                        <ExpanderIcon startPosition={'DOWN'}/>
+                    </div>
+                    <h5 className={'clickable'} style={{display: 'inline-block'}}>{'Advanced: Try ' + endpoint.name + ' now!'}</h5>
+                </div>
+                <div className={'collapse'} id={`${replaceSpaces(endpoint.operationId)}-console-body`}>
+                    <AdvApiConsole endpoint={endpoint} onAddItemToPostbodyCollection={onAddItemToPostbodyCollection} onFillConsoleSampleData={onFillConsoleSampleData} onPathParamChanged={onPathParamChanged} onPostBodyInputChanged={onPostBodyInputChanged} onQueryParamChanged={onQueryParamChanged} onRemovePostbodyCollectionItem={onRemovePostbodyCollectionItem} onResetConsole={onResetConsole} onSubmitConsoleRequest={onSubmitConsoleRequest} onToggleShowExcludedPostBodyProps={onToggleShowExcludedPostBodyProps} showExcludedPostBodyFields={endpoint.showExcludedPostBodyFields}/>
                 </div>
             </div> : null}
             <EndpointExamples endpoint={endpoint} />
