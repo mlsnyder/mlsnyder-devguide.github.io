@@ -92,7 +92,8 @@ endpoint_links: []
 {% assign ep = '${prettyJson}' %}
 
 {% include models.html name=name ${(prettyJson) ? 'examplePretty=ep' : ''} model=model_ %}
-`;
+
+{% include disqus.html %}`;
 
         fs.writeFile(`${dir}/${def}.html`, html, function(err) {
             if (err) {
@@ -115,7 +116,7 @@ const buildHtml = function(fileName, apiDefinitions, apiName, product) {
 
     fields = `["${fields.join('"]["')}"]`;
 
-    const siteDir = `${__dirname}/../${pathWithoutExt}`;
+    const siteDir = `${__dirname}/../api-reference/${pathWithoutExt}`;
 
     writeHtml(siteDir, defs, product, fields, apiName);
 };
