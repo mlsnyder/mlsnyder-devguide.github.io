@@ -37,7 +37,7 @@ const highlightQueryOrPathParams = (requestString, highlightedInputs) => {
 
 const addHighlightPlaceholderToPostBody = (propertyPath, data) => {
     const propNameArray = propertyPath.split(':');
-    const newData = {...data};
+    const newData = { ...data };
     let currDataSlice = newData;
 
     propNameArray.forEach((propName, i) => {
@@ -107,31 +107,31 @@ const syntaxHighlight = (jsonObj, highlightedFields) => {
     return highlightPunctuation(json);
 };
 
-const ConsoleLiveData = ({action, highlightedInputs, path, request, response}) => {
+const ConsoleLiveData = ({ action, highlightedInputs, path, request, response }) => {
     return (
         <div>
             <h5 className={'console-output-header'}>{'API Endpoint'}</h5>
-                <div className={'code-snippet-plaintext'}>{path}</div>
-                <h5 className={'console-output-header'}>{'Method'}</h5>
-                <div className={'code-snippet-plaintext'}>{action.toUpperCase()}</div>
-                    {request ?
-                        <div className={'row'} style={{marginBottom: '8px'}}>
-                            <div className={'col-md-6 console-req-container'}>
-                                <h5 className={'console-output-header'}>{'Request'}</h5>
-                                {/* eslint-disable react/no-danger */}
-                                {typeof request === 'object' || Array.isArray(request) ? <div className={'code-snippet'}><pre dangerouslySetInnerHTML={{__html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null)}} /></div> : <div className={'code-snippet code-snippet-code-text'} dangerouslySetInnerHTML={{__html: highlightQueryOrPathParams(request, highlightedInputs)}} />}
-                            </div>
-                            <div className={'col-md-6 console-res-container'}>
-                                <h5 className={'console-output-header'}>{'Response'}</h5>
-                                <div className={'code-snippet'}><pre dangerouslySetInnerHTML={{__html: response ? syntaxHighlight(response.body) : ' '}} /></div>
-                            </div>
-                        </div> :
-                        <div>
-                            <h5 className={'console-output-header'}>{'Response'}</h5>
-                            <div className={'code-snippet'}><pre dangerouslySetInnerHTML={{__html: response ? syntaxHighlight(response.body) : ' '}} /></div>
-                            {/* eslint-enable react/no-danger */}
-                        </div>
-                    }
+            <div className={'code-snippet-plaintext'}>{path}</div>
+            <h5 className={'console-output-header'}>{'Method'}</h5>
+            <div className={'code-snippet-plaintext'}>{action.toUpperCase()}</div>
+            {request ?
+                <div className={'row'} style={{ marginBottom: '8px' }}>
+                    <div className={'col-md-6 console-req-container'}>
+                        <h5 className={'console-output-header'}>{'Request'}</h5>
+                        {/* eslint-disable react/no-danger */}
+                        {typeof request === 'object' || Array.isArray(request) ? <div className={'code-snippet'}><pre contenteditable="true" dangerouslySetInnerHTML={{ __html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null) }} /></div> : <div className={'code-snippet code-snippet-code-text'} dangerouslySetInnerHTML={{ __html: highlightQueryOrPathParams(request, highlightedInputs) }} />}
+                    </div>
+                    <div className={'col-md-6 console-res-container'}>
+                        <h5 className={'console-output-header'}>{'Response'}</h5>
+                        <div className={'code-snippet'}><pre dangerouslySetInnerHTML={{ __html: response ? syntaxHighlight(response.body) : ' ' }} /></div>
+                    </div>
+                </div> :
+                <div>
+                    <h5 className={'console-output-header'}>{'Response'}</h5>
+                    <div className={'code-snippet'}><pre dangerouslySetInnerHTML={{ __html: response ? syntaxHighlight(response.body) : ' ' }} /></div>
+                    {/* eslint-enable react/no-danger */}
+                </div>
+            }
         </div>
     );
 };

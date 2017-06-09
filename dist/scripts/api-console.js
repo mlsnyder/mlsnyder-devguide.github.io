@@ -2292,7 +2292,7 @@
   RAML.Directives.rootTypes = function () {
     return {
       restrict: 'E',
-      templateUrl: '/dist/directives/root-types.tpl.html',
+      //templateUrl: '/dist/directives/root-types.tpl.html',
       replace: true,
       scope: {
         types: '='

@@ -3,12 +3,11 @@ import ApiConsole from '../../shared/components/apiConsole';
 import ApiDocumentation from './apiDocumentation';
 import EndpointExamples from './endpointExamples';
 import ExpanderIcon from './expanderIcon';
-import SwaggerTest from '../../shared/components/advApiConsole';
 
 const replaceSpaces = (str) => str.replace(/\s/g, '');
 
 // Give our endpoint an id based on its name for our clientside routing in jekyll
-const EndPointComponent = ({endpoint, apiType, onFillConsoleSampleData, onSubmitConsoleRequest, onPostBodyInputChanged, onResetConsole, onQueryParamChanged, onPathParamChanged, onAddItemToPostbodyCollection, onRemovePostbodyCollectionItem, onToggleShowExcludedPostBodyProps}) => (
+const EndPointComponent = ({ endpoint, apiType, onFillConsoleSampleData, onSubmitConsoleRequest, onPostBodyInputChanged, onResetConsole, onQueryParamChanged, onPathParamChanged, onAddItemToPostbodyCollection, onRemovePostbodyCollectionItem, onToggleShowExcludedPostBodyProps }) => (
     <div className={'endpoint-summary'}>
         <ApiDocumentation endpoint={endpoint} />
         <br />
@@ -24,17 +23,17 @@ const EndPointComponent = ({endpoint, apiType, onFillConsoleSampleData, onSubmit
                         setTimeout(() => clearInterval(intervalId), 350);
                     }
                 }>
-                    <div className={'documentation-expand-icon'} id={`${replaceSpaces(endpoint.operationId)}-console-icon`} style={{display: 'inline-block', marginRight: '5px'}}>
-                        <ExpanderIcon startPosition={'DOWN'}/>
+                    <div className={'documentation-expand-icon'} id={`${replaceSpaces(endpoint.operationId)}-console-icon`} style={{ display: 'inline-block', marginRight: '5px' }}>
+                        <ExpanderIcon startPosition={'DOWN'} />
                     </div>
-                    <h5 className={'clickable'} style={{display: 'inline-block'}}>{'Try ' + endpoint.name + ' now!'}</h5>
+                    <h5 className={'clickable'} style={{ display: 'inline-block' }}>{'Try ' + endpoint.name + ' now!'}</h5>
                 </div>
                 <div className={'collapse'} id={`${replaceSpaces(endpoint.operationId)}-console-body`}>
-                    <ApiConsole endpoint={endpoint} onAddItemToPostbodyCollection={onAddItemToPostbodyCollection} onFillConsoleSampleData={onFillConsoleSampleData} onPathParamChanged={onPathParamChanged} onPostBodyInputChanged={onPostBodyInputChanged} onQueryParamChanged={onQueryParamChanged} onRemovePostbodyCollectionItem={onRemovePostbodyCollectionItem} onResetConsole={onResetConsole} onSubmitConsoleRequest={onSubmitConsoleRequest} onToggleShowExcludedPostBodyProps={onToggleShowExcludedPostBodyProps} showExcludedPostBodyFields={endpoint.showExcludedPostBodyFields}/>
+                    <ApiConsole endpoint={endpoint} onAddItemToPostbodyCollection={onAddItemToPostbodyCollection} onFillConsoleSampleData={onFillConsoleSampleData} onPathParamChanged={onPathParamChanged} onPostBodyInputChanged={onPostBodyInputChanged} onQueryParamChanged={onQueryParamChanged} onRemovePostbodyCollectionItem={onRemovePostbodyCollectionItem} onResetConsole={onResetConsole} onSubmitConsoleRequest={onSubmitConsoleRequest} onToggleShowExcludedPostBodyProps={onToggleShowExcludedPostBodyProps} showExcludedPostBodyFields={endpoint.showExcludedPostBodyFields} />
                 </div>
             </div> : null}
-            {/*this is where the advanced try it now section begins */}
-            {apiType === 'REST' ?
+        {/*this is where the advanced try it now section begins */}
+        {apiType === 'REST' ?
             <div>
                 <div className={'adv-try-it-now-header'} data-target={`#${replaceSpaces(endpoint.operationId)}-adv-console-body`} data-toggle={'collapse'} id={`${replaceSpaces(endpoint.operationId)}-adv-console`} onClick={
                     () => {
@@ -46,40 +45,16 @@ const EndPointComponent = ({endpoint, apiType, onFillConsoleSampleData, onSubmit
                         setTimeout(() => clearInterval(intervalId), 350);
                     }
                 }>
-                    <div className={'adv-documentation-expand-icon'} id={`${replaceSpaces(endpoint.operationId)}-adv-console-icon`} style={{display: 'inline-block', marginRight: '5px'}}>
-                        <ExpanderIcon startPosition={'DOWN'}/>
+                    <div className={'adv-documentation-expand-icon'} id={`${replaceSpaces(endpoint.operationId)}-adv-console-icon`} style={{ display: 'inline-block', marginRight: '5px' }}>
+                        <ExpanderIcon startPosition={'DOWN'} />
                     </div>
-                    <h5 className={'clickable'} style={{display: 'inline-block'}}>{'Advanced: Try ' + endpoint.name + ' now!'}</h5>
+                    <h5 className={'clickable'} style={{ display: 'inline-block' }}>{'Advanced: Try ' + endpoint.name + ' now!'}</h5>
                 </div>
                 <div className={'collapse'} id={`${replaceSpaces(endpoint.operationId)}-adv-console-body`}>
-                    <iframe src="/dist/index.html"/>
+                    <iframe src="/dist/index.html" width="100%" height="300" />
                 </div>
             </div> : null}
-
-            {/*this is where the advanced try it now section begins */}
-            {apiType === 'REST' ?
-            <div>
-                <div className={'adv-try-it-now-header'} data-target={`#${replaceSpaces(endpoint.operationId)}-adv-console-body`} data-toggle={'collapse'} id={`${replaceSpaces(endpoint.operationId)}-adv-console`} onClick={
-                    () => {
-                        $(`#${replaceSpaces(endpoint.operationId)}-adv-console-icon`).toggleClass('rotate');
-                        const intervalId = setInterval(() => {
-                            $('#the-nav').affix('checkPosition');
-                        }, 20);
-
-                        setTimeout(() => clearInterval(intervalId), 350);
-                    }
-                }>
-                    <div className={'adv-documentation-expand-icon'} id={`${replaceSpaces(endpoint.operationId)}-adv-console-icon`} style={{display: 'inline-block', marginRight: '5px'}}>
-                        <ExpanderIcon startPosition={'DOWN'}/>
-                    </div>
-                    <h5 className={'clickable'} style={{display: 'inline-block'}}>{'Advanced: Try ' + endpoint.name + ' now!'}</h5>
-                </div>
-                <div className={'collapse'} id={`${replaceSpaces(endpoint.operationId)}-adv-console-body`}>
-                    <SwaggerTest/>
-                </div>
-            </div> : null}
-
-            <EndpointExamples endpoint={endpoint} />
+        <EndpointExamples endpoint={endpoint} />
     </div>
 );
 
