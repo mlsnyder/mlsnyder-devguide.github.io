@@ -1,6 +1,7 @@
 #api-console {
     padding-left: ($grid-gutter-width / 2);
 }
+
 .api-console-form-wrapper {
     background: whitesmoke;
     padding: 5px;
@@ -24,7 +25,40 @@
     padding: 10px;
     margin: 10px;
     overflow: auto;
+    background: $Darkest-grey;
+    .string {
+        color: #71e4ff;
+    }
+    .number {
+        color: #fc88ff;
+    }
+    .boolean {
+        color: #fc88ff;
+    }
+    .null {
+        color: #fc88ff;
+    }
+    .key {
+        color: #8fffa7;
+    }
+    .punctuation {
+        color: #fceb51;
+    }
+}
 
+.nav-tabs {
+    color: white;
+}
+
+.code-snippet-tabcontent {
+    border: 1px solid #71e4ff;
+    padding: 10px;
+    padding-top: 0px;
+    margin: 10px;
+    margin-top: 0px;
+    overflow: auto;
+    background: $Darkest-grey;
+    display: none;
     .string {
         color: #71e4ff;
     }
@@ -46,31 +80,37 @@
 }
 
 .highlighted-field {
-        background: #fceb51;
-        &.string {
-            color: darken(#71e4ff, 40%);
-        }
-        &.number, &.boolean, &.null {
-            color: darken(#fc88ff, 40%);
-        }
-        &.key {
-            color: darken(#8fffa7, 40%);
-        }
+    background: #fceb51;
+    &.string {
+        color: darken(#71e4ff, 40%);
     }
+    &.number,
+    &.boolean,
+    &.null {
+        color: darken(#fc88ff, 40%);
+    }
+    &.key {
+        color: darken(#8fffa7, 40%);
+    }
+}
 
 .code-snippet-code-text .highlighted-field {
     color: darken(#8fffa7, 40%);
 }
 
-.code-snippet-code-text {
+.code-snippet-code-text,
+.code-snippet-tabcontent textarea {
     color: #8fffa7;
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
     font-size: 13px;
 }
 
-.code-snippet pre {
+.code-snippet pre,
+.code-snippet-tabcontent pre,
+.code-snippet-tabcontent textarea {
     background: $Darkest-grey;
     border: none;
+    outline: none;
 }
 
 .hdr-btn-adj-text {
@@ -84,18 +124,14 @@
         padding-bottom: 3.5px;
         margin-bottom: 7.5px;
         text-transform: capitalize;
-
         h4 {
             font-weight: bold;
         }
-
         &:first-child {
             margin-right: 10px;
         }
-
         &:not(:first-child) {
             background: white;
-
             h4 {
                 color: $Darkest-grey;
             }
@@ -105,20 +141,17 @@
             padding-right: 0;
             padding-left: 0;
         }
-
         & .api-console-input-section:first-of-type {
             @extend .resetIndentation;
         }
         & .api-console-input-section .api-console-input-section {
             @extend .resetIndentation;
         }
-
-        & .api-console-input-section > .api-console-input-section {
+        & .api-console-input-section>.api-console-input-section {
             padding-right: 10px;
             padding-left: 10px;
         }
-
-        & .api-console-input-section > .api-console-input-section .api-console-input-section {
+        & .api-console-input-section>.api-console-input-section .api-console-input-section {
             @extend .resetIndentation;
         }
     }
@@ -137,7 +170,9 @@ h5.console-output-header {
     flex-wrap: wrap;
 }
 
+
 /* Strangely fixes webkit flexbox-bootstrap row compat. issues. Sure... */
+
 .api-console.container:before,
 .api-console.container:after,
 .api-console.row:before,
@@ -145,7 +180,8 @@ h5.console-output-header {
     content: normal;
 }
 
-.api-console.row > .api-console-form-wrapper, .api-console-output {
+.api-console.row>.api-console-form-wrapper,
+.api-console-output {
     display: flex;
     flex-direction: column;
 }
@@ -156,6 +192,7 @@ h5.console-output-header {
     cursor: pointer;
     margin-bottom: 10px;
 }
+
 .clickable:hover {
     color: $Ava-blue;
     text-decoration: none;

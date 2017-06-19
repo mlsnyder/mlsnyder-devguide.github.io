@@ -1,7 +1,14 @@
 import SampleConsoles from '../components/sampleConsoles';
-import {connect} from 'react-redux';
+import {
+    connect
+} from 'react-redux';
 import actions from '../../shared/actions';
-import {replaceStringPlaceholders, reduceParamsToKeyValuePair, submitApiRequest, submitProxiedRequest} from '../../shared/helpers';
+import {
+    replaceStringPlaceholders,
+    reduceParamsToKeyValuePair,
+    submitApiRequest,
+    submitProxiedRequest
+} from '../../shared/helpers';
 
 const mapStateToProps = (state) => {
     return {
@@ -16,8 +23,8 @@ const mapDispatchToProps = (dispatch) => {
         },
         onSubmitConsoleRequest: (endpoint) => {
             /* If our endpoint has a defined proxy, use that to make our API console request
-            * Otherwise, just use the path specified as `host` in Swagger file
-            */
+             * Otherwise, just use the path specified as `host` in Swagger file
+             */
             // const requestPath = endpoint.proxy ? endpoint.proxy.route : endpoint.path;
 
             // const url = (endpoint.pathParams ? replaceStringPlaceholders(requestPath, reduceParamsToKeyValuePair(endpoint.pathParams)) : requestPath) + (endpoint.qsPath || '');
@@ -34,7 +41,6 @@ const mapDispatchToProps = (dispatch) => {
 
             // create either a proxied or normal API request
             let apiRequest;
-
             if (endpoint.proxy) {
                 // Api Reference has complex pathParam/queryString structure (example, fieldType, etc.)
                 // Just want key value pairs that our recipes use
@@ -53,12 +59,12 @@ const mapDispatchToProps = (dispatch) => {
                 apiRequest = submitApiRequest.bind(null, url, endpoint.action, postBody);
             }
             apiRequest()
-            .then((apiResponse) => {
-                dispatch(actions.submitConsoleRequest(endpoint.id, apiResponse.body, apiResponse.status, apiResponse.statusMessage));
-            })
-            .catch((err) => {
-                dispatch(actions.submitConsoleRequest(endpoint.id, err, err.message, err.message));
-            });
+                .then((apiResponse) => {
+                    dispatch(actions.submitConsoleRequest(endpoint.id, apiResponse.body, apiResponse.status, apiResponse.statusMessage));
+                })
+                .catch((err) => {
+                    dispatch(actions.submitConsoleRequest(endpoint.id, err, err.message, err.message));
+                });
         },
         onPostBodyInputChanged: (endpointId, paramName, newValue) => {
             dispatch(actions.postBodyInputChanged(endpointId, paramName, newValue));

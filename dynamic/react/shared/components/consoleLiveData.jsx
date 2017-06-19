@@ -6,6 +6,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
+import PostBodyForm from './postBodyForm';
+import actions from '../../shared/actions';
+
 
 // TODO: Reuse the reducer version of this?
 const getPropertyName = (name) => {
@@ -67,6 +70,7 @@ const highlightPunctuation = (str) => {
         return '<span class="punctuation">' + m + '</span>';
     });
 };
+
 const syntaxHighlight = (jsonObj, highlightedFields) => {
     // Need to prevent changes to our postBody we want to stringify don't affect actual postBody
     let jsonObjCopy;
@@ -108,7 +112,41 @@ const syntaxHighlight = (jsonObj, highlightedFields) => {
     return highlightPunctuation(json);
 };
 
-const ConsoleLiveData = ({ action, highlightedInputs, path, request, response }) => {
+const PostHelper = ({ action, request, highlightedInputs, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, requestInput }) => {
+    if (typeof request === 'object' || Array.isArray(request)) {
+        if (action == 'post') {
+            console.log("endpoint.requestInput = " + endpoint.requestInput);
+            return (
+                <div>
+                    <ul className="nav nav-tabs">
+                        <li className={'nav active'} id={'RO'}><a href={'#console_input_readOnly'} data-toggle={'tab'} onClick={(e) => {onConsoleToggledReadOnly(endpoint.id)}}>Read Only</a></li>
+                        <li className={'nav'} id={'FE'}><a href={'#console_input_freeEdit'} data-toggle={'tab'} onClick={(e) => {onConsoleToggledFreeEdit(endpoint.id)}}>Free Edit</a></li>
+                    </ul>
+                    <div className="tab-content">
+                        <div id={'console_input_readOnly'} className={'code-snippet-tabcontent active'}><pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null) }} /></div>
+                        <div id={'console_input_freeEdit'} className={'code-snippet-tabcontent'}><textarea id={'console_input'} className={'code-snipet-console'} value={endpoint.requestInput} onChange={(e) => {checkFormatting(onRequestChanged, endpoint.id)}} /></div>                    
+                    </div>
+                </div>
+            );
+        } else {
+            return (
+                <div id={'console_input'} className={'code-snippet'}><pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null) }} /></div>
+            );
+        }
+    } else {
+        return (
+            <div className={'code-snippet code-snippet-code-text'} dangerouslySetInnerHTML={{ __html: highlightQueryOrPathParams(request, highlightedInputs) }} />
+        );
+    }
+};
+
+function checkFormatting(onRequestChanged, id) {
+    var text = document.getElementById('console_input');
+    onRequestChanged(id, text.value);
+};
+
+const ConsoleLiveData = ({ action, highlightedInputs, path, request, response, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, requestInput }) => {
+    console.log("requestInput --> in consoleLiveData constructor = " + requestInput);
     return (
         <div>
             <h5 className={'console-output-header'}>{'API Endpoint'}</h5>
@@ -120,7 +158,14 @@ const ConsoleLiveData = ({ action, highlightedInputs, path, request, response })
                     <div className={'col-md-6 console-req-container'}>
                         <h5 className={'console-output-header'}>{'Request'}</h5>
                         {/* eslint-disable react/no-danger */}
-                        {typeof request === 'object' || Array.isArray(request) ? <div className={'code-snippet'}><pre contenteditable="true" dangerouslySetInnerHTML={{ __html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null) }} /></div> : <div className={'code-snippet code-snippet-code-text'} dangerouslySetInnerHTML={{ __html: highlightQueryOrPathParams(request, highlightedInputs) }} />}
+                        <PostHelper action={action} 
+                                    request={request} 
+                                    highlightedInputs={highlightedInputs} 
+                                    onRequestChanged={onRequestChanged} 
+                                    endpoint = {endpoint} 
+                                    onConsoleToggledFreeEdit={onConsoleToggledFreeEdit} 
+                                    onConsoleToggledReadOnly={onConsoleToggledReadOnly} 
+                                    requestInput={requestInput}/>
                     </div>
                     <div className={'col-md-6 console-res-container'}>
                         <h5 className={'console-output-header'}>{'Response'}</h5>
@@ -158,7 +203,12 @@ ConsoleLiveData.propTypes = {
         body: PropTypes.oneOfType([
             PropTypes.object, PropTypes.array
         ]).isRequired
-    })
+    }),
+    onRequestChanged: PropTypes.func.isRequired,
+    endpoint: PropTypes.object.isRequired,
+    onConsoleToggledFreeEdit: PropTypes.func.isRequired,
+    onConsoleToggledReadOnly: PropTypes.func.isRequired,
+    requestInput: PropTypes.string.isRequired
 };
 
 export default ConsoleLiveData;

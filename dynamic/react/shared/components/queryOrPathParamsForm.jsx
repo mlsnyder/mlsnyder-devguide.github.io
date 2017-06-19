@@ -10,14 +10,15 @@ const PARAM_TYPES = {
     PATH: 'PATH'
 };
 
-const QueryOrPathParamsForm = ({endpoint, paramType, params, onInputChange, onSubmitConsoleRequest}) => {
+const QueryOrPathParamsForm = ({endpoint, paramType, params, onInputChange, onSubmitConsoleRequest, consoleViewFreeEdit}) => {
     return (
         <form className={'api-console-input-section'} onSubmit={
             (e) => {
                 e.preventDefault();
-                onSubmitConsoleRequest(endpoint);
+                onSubmitConsoleRequest(endpoint, consoleViewFreeEdit);
             }
-        }>
+        }> 
+        <fieldset disabled>
             <h4 className={'api-console-section-header'}>{paramType === PARAM_TYPES.QUERY_STRING ? 'Query String' : 'Path Parameters'}</h4>
             {Object.keys(params).map((key, i) => {
                 return (
@@ -50,6 +51,7 @@ const QueryOrPathParamsForm = ({endpoint, paramType, params, onInputChange, onSu
                 );
             })}
             <input style={{display: 'none'}} type={'submit'} value={'submit'}/>
+        </fieldset>
         </form>
     );
 };
@@ -93,6 +95,7 @@ QueryOrPathParamsForm.propTypes = {
     onInputChange: PropTypes.func.isRequired,
     onSubmitConsoleRequest: PropTypes.func.isRequired,
     paramType: PropTypes.oneOf(['QUERY_STRING', 'PATH']).isRequired,
+    consoleViewFreeEdit: PropTypes.bool.isRequired,
     params: PropTypes.objectOf(
         PropTypes.shape({
             description: PropTypes.string,

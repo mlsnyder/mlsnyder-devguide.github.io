@@ -22,10 +22,16 @@ const ApiConsole = (props) => {
             </div>
             <div className={'col-md-8 col-xs-12 api-console-output'}>
                 <ConsoleLiveData
+                    endpoint={props.endpoint}
                     action={props.endpoint.action}
                     path={props.endpoint.path}
                     request={getRequest(props.endpoint)}
-                    response={props.endpoint.apiResponse} />
+                    response={props.endpoint.apiResponse}
+                    onRequestChanged={props.onRequestChanged} 
+                    endpoint={props.endpoint}
+                    onConsoleToggledFreeEdit={props.onConsoleToggledFreeEdit}
+                    onConsoleToggledReadOnly={props.onConsoleToggledReadOnly}
+                    requestInput={props.requestInput}/>
             </div>
         </div>
     );
@@ -75,7 +81,12 @@ ApiConsole.propTypes = {
     onRemovePostbodyCollectionItem: PropTypes.func.isRequired,
     onResetConsole: PropTypes.func.isRequired,
     onSubmitConsoleRequest: PropTypes.func.isRequired,
-    onToggleShowExcludedPostBodyProps: PropTypes.func.isRequired
+    onToggleShowExcludedPostBodyProps: PropTypes.func.isRequired,
+    onRequestChanged: PropTypes.func.isRequired,
+    onConsoleToggledReadOnly: PropTypes.func.isRequired,
+    onConsoleToggledFreeEdit: PropTypes.func.isRequired,
+    consoleViewFreeEdit: PropTypes.bool.isRequired,
+    requestInput: PropTypes.string.isRequired
 };
 
 export default ApiConsole;

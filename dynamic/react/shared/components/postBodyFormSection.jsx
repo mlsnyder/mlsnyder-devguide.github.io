@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
  * array items in a PostBody
  * */
 const PostBodyFormSection = ({endpointId, propertyName, displayName, children, canRemove, onRemovePostbodyCollectionItem}) => {
+   //var active = document.getElementsbyClassName("nav active");
+   //console.log('active.length = ' + active.length);
+   //console.log("active.text = " + active[0].text);
     return (
         <div className={'api-console-input-section'}>
             <h4 className={'api-console-section-header s5'}>

@@ -41,8 +41,8 @@
     "postcss-cli": "^2.6.0",
     "prop-types": "^15.5.10",
     "ramda": "^0.22.1",
-    "react": "^15.2.1",
-    "react-dom": "^15.2.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
     "react-markdown": "^2.4.2",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
@@ -52,5 +52,8 @@
     "watch": "^0.19.2",
     "watchify": "^3.6.1",
     "whatwg-fetch": "^1.0.0"
+  },
+  "dependencies": {
+    "draft-js": "^0.10.1"
   }
 }

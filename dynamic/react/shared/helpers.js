@@ -51,7 +51,9 @@ const hasExcludedProperties = (postBodySchema) => {
 // Function that converts Map<string, {example, fieldType, required, value}>
 // to Map<string, string>. Recipes only store key-value string pairs for their path params and query strings
 // so use this when dealing with Get Started or Api Reference apps to reduce to that
-const reduceParamsToKeyValuePair = (params = {}) => Object.keys(params).reduce((accum, k) => ({...accum, [k]: params[k].value}), {});
+const reduceParamsToKeyValuePair = (params = {}) => Object.keys(params).reduce((accum, k) => ({ ...accum,
+    [k]: params[k].value
+}), {});
 
 /* (String, HashMap<String, String>) -> String
  * Replaces {}-delimited placeholder values in a string with their equiv values
@@ -77,14 +79,18 @@ const buildQueryString = (map = {}) => {
 const fillOrRemoveRequestParamSampleData = (params, remove) => {
     if (remove) {
         return Object.keys(params).reduce((accum, pName) => {
-            accum[pName] = {...params[pName], value: ''};
+            accum[pName] = { ...params[pName],
+                value: ''
+            };
             return accum;
         }, {});
     }
 
     return Object.keys(params).reduce((newParams, paramName) => {
         if (params[paramName].example) {
-            newParams[paramName] = {...params[paramName], value: params[paramName].example};
+            newParams[paramName] = { ...params[paramName],
+                value: params[paramName].example
+            };
         } else {
             newParams[paramName] = params[paramName];
         }
@@ -92,6 +98,8 @@ const fillOrRemoveRequestParamSampleData = (params, remove) => {
         return newParams;
     }, {});
 };
+
+
 // Generates fills sample data in postBody given Post Body's schema
 const fillPostBodySampleData = (body, showExcludedPostBodyFields) => {
     if (body === undefined || (body.isExcluded && !showExcludedPostBodyFields)) {
@@ -105,7 +113,9 @@ const fillPostBodySampleData = (body, showExcludedPostBodyFields) => {
         return [fillPostBodySampleData(body.items, showExcludedPostBodyFields)];
     }
     const objBody = Object.keys(body).filter((n) => n !== 'required' && n !== 'isExcluded').reduce((accum, propName) => {
-        return {...accum, [propName]: fillPostBodySampleData(body[propName], showExcludedPostBodyFields)};
+        return { ...accum,
+            [propName]: fillPostBodySampleData(body[propName], showExcludedPostBodyFields)
+        };
     }, {});
 
     return objBody;
@@ -153,7 +163,9 @@ const buildInitialPostBodyData = (body, showExcludedPostBodyFields) => {
         return [buildInitialPostBodyData(body.items, showExcludedPostBodyFields)];
     }
     const objBody = Object.keys(body).filter((n) => n !== 'required' && n !== 'isExcluded').reduce((accum, propName) => {
-        return {...accum, [propName]: buildInitialPostBodyData(body[propName], showExcludedPostBodyFields)};
+        return { ...accum,
+            [propName]: buildInitialPostBodyData(body[propName], showExcludedPostBodyFields)
+        };
     }, {});
 
     return objBody;
@@ -179,35 +191,40 @@ const submitProxiedRequest = (endpoint) => {
     const [bucket, key] = endpoint.proxy.key.location.split('/');
     /* eslint-disable no-undef */
     // AWS node library doesn't work with browserify, hardcoded the script tag into default.html
-    const keyBucket = new AWS.S3({params: {Bucket: bucket, Key: key}});
+    const keyBucket = new AWS.S3({
+        params: {
+            Bucket: bucket,
+            Key: key
+        }
+    });
 
     /* eslint-enable no-undef */
     return keyBucket.makeUnauthenticatedRequest('getObject', {}).promise()
-    .then((bucketRes) => {
-        return fetch(endpoint.proxy.route, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                apiKey: bucketRes.Body.toString(),
-                method: endpoint.action,
-                route: endpoint.path,
-                queryString: endpoint.queryString || {},
-                pathParams: endpoint.pathParams || {},
-                postBody: endpoint.postBody
-            })
+        .then((bucketRes) => {
+            return fetch(endpoint.proxy.route, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    apiKey: bucketRes.Body.toString(),
+                    method: endpoint.action,
+                    route: endpoint.path,
+                    queryString: endpoint.queryString || {},
+                    pathParams: endpoint.pathParams || {},
+                    postBody: endpoint.postBody
+                })
+            });
+        })
+        .then((rawApiRes) => {
+            return rawApiRes.json().then((body) => {
+                return {
+                    status: rawApiRes.status.toString(),
+                    statusMessage: rawApiRes.statusText,
+                    body: body
+                };
+            });
         });
-    })
-    .then((rawApiRes) => {
-        return rawApiRes.json().then((body) => {
-            return {
-                status: rawApiRes.status.toString(),
-                statusMessage: rawApiRes.statusText,
-                body: body
-            };
-        });
-    });
 };
 
 
@@ -226,15 +243,28 @@ const submitApiRequest = (url, action, postBody = null) => {
         req.body = JSON.stringify(postBody);
     }
     return fetch(url, req)
-    .then((rawApiRes) => {
-        return rawApiRes.json().then((body) => {
-            return {
-                status: rawApiRes.status.toString(),
-                statusMessage: rawApiRes.statusText,
-                body: body
-            };
+        .then((rawApiRes) => {
+            return rawApiRes.json().then((body) => {
+                return {
+                    status: rawApiRes.status.toString(),
+                    statusMessage: rawApiRes.statusText,
+                    body: body
+                };
+            });
         });
-    });
 };
 
-export {hasExampleData, buildCurl, fillOrRemoveSampleData, buildInitialPostBodyData, fillPostBodySampleData, fillOrRemoveRequestParamSampleData, hasExcludedProperties, submitApiRequest, submitProxiedRequest, reduceParamsToKeyValuePair, replaceStringPlaceholders, buildQueryString};
+export {
+    hasExampleData,
+    buildCurl,
+    fillOrRemoveSampleData,
+    buildInitialPostBodyData,
+    fillPostBodySampleData,
+    fillOrRemoveRequestParamSampleData,
+    hasExcludedProperties,
+    submitApiRequest,
+    submitProxiedRequest,
+    reduceParamsToKeyValuePair,
+    replaceStringPlaceholders,
+    buildQueryString
+};
