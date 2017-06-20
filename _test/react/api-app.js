@@ -19400,7 +19400,9 @@ describe('apiApp Reducer', () => {
                         "sampleAuthHeader": null,
                         "showExcludedPostBodyFields": false,
                         "curl": "curl -X GET \"http://sandbox.landedcost.api.avalara.com/v3/validate-creds\" -H \"Accept: application/json\"",
-                        "id": 0
+                        "id": 0,
+                        "apiConsoleLoading": false,
+                        "consoleError": false
                     },
                     {
                         "operationId": "calculate",
