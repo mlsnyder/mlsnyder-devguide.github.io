@@ -13,7 +13,7 @@ const SampleConsoles = ({apiEndpoints, onAddItemToPostbodyCollection, onFillCons
             </ul>
             <div className='tab-content'>
                 {apiEndpoints.map((endpoint, i) => (
-                        <ApiConsoleWrapper endpoint={endpoint} key={i} onAddItemToPostbodyCollection={onAddItemToPostbodyCollection} onFillConsoleSampleData={onFillConsoleSampleData} onPostBodyInputChanged={onPostBodyInputChanged} onQueryParamChanged={onQueryParamChanged} onRemovePostbodyCollectionItem={onRemovePostbodyCollectionItem} onResetConsole={onResetConsole} onSubmitConsoleRequest={onSubmitConsoleRequest} onRequestChanged={onRequestChanged}/>
+                        <ApiConsoleWrapper endpoint={endpoint} key={i} onAddItemToPostbodyCollection={onAddItemToPostbodyCollection} onFillConsoleSampleData={onFillConsoleSampleData} onPostBodyInputChanged={onPostBodyInputChanged} onQueryParamChanged={onQueryParamChanged} onRemovePostbodyCollectionItem={onRemovePostbodyCollectionItem} onResetConsole={onResetConsole} onSubmitConsoleRequest={onSubmitConsoleRequest} />
                     )
                 )}
             </div>

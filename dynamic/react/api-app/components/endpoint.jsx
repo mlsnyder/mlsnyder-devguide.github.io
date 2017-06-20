@@ -8,24 +8,24 @@ import ExpanderIcon from './expanderIcon';
 const replaceSpaces = (str) => str.replace(/\s/g, '');
 
 // Give our endpoint an id based on its name for our clientside routing in jekyll
-const EndPointComponent = ({ endpoint, apiType, onFillConsoleSampleData, onSubmitConsoleRequest, onPostBodyInputChanged, onResetConsole, onQueryParamChanged, onPathParamChanged, onAddItemToPostbodyCollection, onRemovePostbodyCollectionItem, onToggleShowExcludedPostBodyProps, onRequestChanged, onConsoleToggledFreeEdit, onConsoleToggledReadOnly }) => (
+const EndPointComponent = ({endpoint, apiType, onFillConsoleSampleData, onSubmitConsoleRequest, onPostBodyInputChanged, onResetConsole, onQueryParamChanged, onPathParamChanged, onAddItemToPostbodyCollection, onRemovePostbodyCollectionItem, onToggleShowExcludedPostBodyProps, onRequestChanged, onConsoleToggledFreeEdit, onConsoleToggledReadOnly}) => (
     <div className={'endpoint-summary'}>
         <ApiDocumentation endpoint={endpoint} />
         <br />
-        {apiType === 'REST' ?
+        { apiType === 'REST' ?
             <div>
                 <div className={'try-it-now-header'} data-target={`#${replaceSpaces(endpoint.operationId)}-console-body`} data-toggle={'collapse'} id={`${replaceSpaces(endpoint.operationId)}-console`} onClick={
                     () => {
                         $(`#${replaceSpaces(endpoint.operationId)}-console-icon`).toggleClass('rotate');
                     }
                 }>
-                    <div className={'documentation-expand-icon'} id={`${replaceSpaces(endpoint.operationId)}-console-icon`} style={{ display: 'inline-block', marginRight: '5px' }}>
+                    <div className={'documentation-expand-icon'} id={`${replaceSpaces(endpoint.operationId)}-console-icon`} style={{display: 'inline-block', marginRight: '5px'}}>
                         <ExpanderIcon startPosition={'DOWN'} />
                     </div>
-                    <h5 className={'clickable'} style={{ display: 'inline-block' }}>{'Try ' + endpoint.name + ' now!'}</h5>
+                    <h5 className={'clickable'} style={{display: 'inline-block'}}>{'Try ' + endpoint.name + ' now!'}</h5>
                 </div>
                 <div className={'collapse'} id={`${replaceSpaces(endpoint.operationId)}-console-body`}>
-                    <ApiConsole endpoint={endpoint} onAddItemToPostbodyCollection={onAddItemToPostbodyCollection} onFillConsoleSampleData={onFillConsoleSampleData} onPathParamChanged={onPathParamChanged} onPostBodyInputChanged={onPostBodyInputChanged} onQueryParamChanged={onQueryParamChanged} onRemovePostbodyCollectionItem={onRemovePostbodyCollectionItem} onResetConsole={onResetConsole} onSubmitConsoleRequest={onSubmitConsoleRequest} onToggleShowExcludedPostBodyProps={onToggleShowExcludedPostBodyProps} showExcludedPostBodyFields={endpoint.showExcludedPostBodyFields} onRequestChanged={onRequestChanged} onConsoleToggledFreeEdit={onConsoleToggledFreeEdit} onConsoleToggledReadOnly={onConsoleToggledReadOnly} />
+                    <ApiConsole endpoint={endpoint} onAddItemToPostbodyCollection={onAddItemToPostbodyCollection} onConsoleToggledFreeEdit={onConsoleToggledFreeEdit} onConsoleToggledReadOnly={onConsoleToggledReadOnly} onFillConsoleSampleData={onFillConsoleSampleData} onPathParamChanged={onPathParamChanged} onPostBodyInputChanged={onPostBodyInputChanged} onQueryParamChanged={onQueryParamChanged} onRemovePostbodyCollectionItem={onRemovePostbodyCollectionItem} onRequestChanged={onRequestChanged} onResetConsole={onResetConsole} onSubmitConsoleRequest={onSubmitConsoleRequest} onToggleShowExcludedPostBodyProps={onToggleShowExcludedPostBodyProps} showExcludedPostBodyFields={endpoint.showExcludedPostBodyFields} />
                 </div>
             </div> : null}
         <EndpointExamples endpoint={endpoint} />
@@ -73,18 +73,18 @@ EndPointComponent.propTypes = {
         })
     }).isRequired,
     onAddItemToPostbodyCollection: PropTypes.func.isRequired,
+    onConsoleToggledFreeEdit: PropTypes.func.isRequired,
+    onConsoleToggledReadOnly: PropTypes.func.isRequired,
     onFillConsoleSampleData: PropTypes.func.isRequired,
     onPathParamChanged: PropTypes.func.isRequired,
     onPostBodyInputChanged: PropTypes.func.isRequired,
     onQueryParamChanged: PropTypes.func.isRequired,
     onRemovePostbodyCollectionItem: PropTypes.func.isRequired,
+    onRequestChanged: PropTypes.func.isRequired,
     onResetConsole: PropTypes.func.isRequired,
     onSubmitConsoleRequest: PropTypes.func.isRequired,
     onToggleShowExcludedPostBodyProps: PropTypes.func.isRequired,
-    sampleContentType: PropTypes.array,
-    onRequestChanged: PropTypes.func.isRequired,
-    onConsoleToggledReadOnly: PropTypes.func.isRequired,
-    onConsoleToggledFreeEdit: PropTypes.func.isRequired
+    sampleContentType: PropTypes.array 
 };
 
 export default EndPointComponent;

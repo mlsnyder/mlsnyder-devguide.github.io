@@ -41,6 +41,7 @@ const mapDispatchToProps = (dispatch) => {
 
             // create either a proxied or normal API request
             let apiRequest;
+
             if (endpoint.proxy) {
                 // Api Reference has complex pathParam/queryString structure (example, fieldType, etc.)
                 // Just want key value pairs that our recipes use

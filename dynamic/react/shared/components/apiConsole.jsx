@@ -22,16 +22,15 @@ const ApiConsole = (props) => {
             </div>
             <div className={'col-md-8 col-xs-12 api-console-output'}>
                 <ConsoleLiveData
-                    endpoint={props.endpoint}
                     action={props.endpoint.action}
                     consoleLoading={props.endpoint.apiConsoleLoading}
-                    path={props.endpoint.path}
-                    request={getRequest(props.endpoint)}
-                    response={props.endpoint.apiResponse}
-                    onRequestChanged={props.onRequestChanged} 
                     endpoint={props.endpoint}
                     onConsoleToggledFreeEdit={props.onConsoleToggledFreeEdit}
-                    onConsoleToggledReadOnly={props.onConsoleToggledReadOnly}/>
+                    onConsoleToggledReadOnly={props.onConsoleToggledReadOnly}
+                    onRequestChanged={props.onRequestChanged}
+                    path={props.endpoint.path}
+                    request={getRequest(props.endpoint)}
+                    response={props.endpoint.apiResponse}/>
             </div>
         </div>
     );

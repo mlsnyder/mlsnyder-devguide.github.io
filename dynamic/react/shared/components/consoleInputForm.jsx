@@ -4,13 +4,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import QueryOrPathParamsForm from './queryOrPathParamsForm';
 import PostBodyForm from './postBodyForm';
-import { hasExampleData } from '../helpers';
+import {hasExampleData} from '../helpers';
 
-const ConsoleInputForm = ({ endpoint, onFillConsoleSampleData, onSubmitConsoleRequest, onPostBodyInputChanged, onResetConsole, onQueryParamChanged, onPathParamChanged, onAddItemToPostbodyCollection, onRemovePostbodyCollectionItem, onToggleShowExcludedPostBodyProps }) => {
+const ConsoleInputForm = ({endpoint, onFillConsoleSampleData, onSubmitConsoleRequest, onPostBodyInputChanged, onResetConsole, onQueryParamChanged, onPathParamChanged, onAddItemToPostbodyCollection, onRemovePostbodyCollectionItem, onToggleShowExcludedPostBodyProps}) => {
     return (
         <div>
             <div>
-                <h3 style={{ display: 'inline-block' }}>{'Input'}</h3>
+                <h3 style={{display: 'inline-block'}}>{'Input'}</h3>
                 {hasExampleData('QUERY_STRING', endpoint.queryString) || hasExampleData('POST_BODY', endpoint.requestSchema) || hasExampleData('PATH_PARAM', endpoint.pathParams) ?
                     <span
                         className='m-l-1 clickable hdr-btn-adj-text fill-sample-data'
@@ -19,7 +19,7 @@ const ConsoleInputForm = ({ endpoint, onFillConsoleSampleData, onSubmitConsoleRe
                         {' Fill with Sample Data'}
                     </span> : null}
             </div>
-            <div style={{ marginBottom: '10px' }}>
+            <div style={{marginBottom: '10px'}}>
                 <button
                     className='btn btn-primary submit'
                     onClick={
@@ -43,7 +43,7 @@ const ConsoleInputForm = ({ endpoint, onFillConsoleSampleData, onSubmitConsoleRe
             {endpoint.queryString ? <QueryOrPathParamsForm endpoint={endpoint} onInputChange={onQueryParamChanged} onSubmitConsoleRequest={onSubmitConsoleRequest} paramType={'QUERY_STRING'} params={endpoint.queryString} /> : null}
             {endpoint.requestSchema ? <PostBodyForm endpoint={endpoint} name={endpoint.name.toLowerCase() + '_' + endpoint.action} onAddItemToPostbodyCollection={onAddItemToPostbodyCollection} onPostBodyInputChanged={onPostBodyInputChanged} onRemovePostbodyCollectionItem={onRemovePostbodyCollectionItem} onSubmitConsoleRequest={onSubmitConsoleRequest} onToggleShowExcludedPostBodyProps={onToggleShowExcludedPostBodyProps} /> : null}
             {endpoint.requestSchema ?
-                <div style={{ marginBottom: '10px' }}>
+                <div style={{marginBottom: '10px'}}>
                     <button
                         className='btn btn-primary'
                         onClick={
@@ -63,7 +63,7 @@ const ConsoleInputForm = ({ endpoint, onFillConsoleSampleData, onSubmitConsoleRe
                         {'Reset'}
                     </span>
                 </div> : null}
-            <div style={{ background: 'blue', height: 'auto' }} />
+            <div style={{background: 'blue', height: 'auto'}} />
         </div>
     );
 };

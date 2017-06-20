@@ -28,9 +28,10 @@ const mapDispatchToProps = (dispatch) => {
              */
             if (endpoint.consoleViewFreeEdit) {
                 try {
-                    var text = JSON.parse(endpoint.requestInput);
+                    const text = JSON.parse(endpoint.requestInput);
                     // create either a proxied or normal API request
                     let apiRequest;
+
                     if (endpoint.proxy) {
                         // Api Reference has complex pathParam/queryString structure (example, fieldType, etc.)
                         // Just want key value pairs that our recipes use
@@ -44,7 +45,6 @@ const mapDispatchToProps = (dispatch) => {
                         });
                     } else {
                         const url = (endpoint.pathParams ? replaceStringPlaceholders(endpoint.path, reduceParamsToKeyValuePair(endpoint.pathParams)) : endpoint.path) + (endpoint.qsPath || '');
-                        var input = document.getElementById("console_input");
                         const postBody = endpoint.postBody || null;
                         apiRequest = submitApiRequest.bind(null, url, endpoint.action, postBody);
                     }
@@ -64,6 +64,7 @@ const mapDispatchToProps = (dispatch) => {
             } else {
                 // create either a proxied or normal API request
                 let apiRequest;
+
                 if (endpoint.proxy) {
                     // Api Reference has complex pathParam/queryString structure (example, fieldType, etc.)
                     // Just want key value pairs that our recipes use
@@ -77,8 +78,9 @@ const mapDispatchToProps = (dispatch) => {
                     });
                 } else {
                     const url = (endpoint.pathParams ? replaceStringPlaceholders(endpoint.path, reduceParamsToKeyValuePair(endpoint.pathParams)) : endpoint.path) + (endpoint.qsPath || '');
-                    var input = document.getElementById("console_input");
+
                     const postBody = endpoint.postBody || null;
+
                     apiRequest = submitApiRequest.bind(null, url, endpoint.action, postBody);
                 }
                 // Show Animation here until promise or isLoading comes back or w/e

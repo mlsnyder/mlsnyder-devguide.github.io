@@ -9,10 +9,10 @@ export default (state = {}, action) => {
             };
         case actionTypes.AUTH_KEY_CHANGED:
             // Update auth header for each request in pmCollection:
-            const params = { ...state.auth.params,
+            const params = {...state.auth.params,
                 [action.keyName]: action.inputVal
             };
-            const auth = { ...state.auth,
+            const auth = {...state.auth,
                 params: params
             };
 
@@ -54,7 +54,7 @@ export default (state = {}, action) => {
         case actionTypes.ADD_ITEM_TO_POST_BODY_COLLECTION:
         case actionTypes.REMOVE_ITEM_FROM_POST_BODY_COLLECTION:
         case actionTypes.TOGGLE_SHOW_EXCLUDED_POST_BODY_PROPS:
-            return { ...state,
+            return {...state,
                 apiEndpoints: state.apiEndpoints.map((endpoint) => {
                     if (endpoint.id === action.endpointId) {
                         return apiConsoleReducer(endpoint, action);

@@ -6,8 +6,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
-import PostBodyForm from './postBodyForm';
-import actions from '../../shared/actions';
 
 
 // TODO: Reuse the reducer version of this?
@@ -41,9 +39,8 @@ const highlightQueryOrPathParams = (requestString, highlightedInputs) => {
 
 const addHighlightPlaceholderToPostBody = (propertyPath, data) => {
     const propNameArray = propertyPath.split(':');
-    const newData = { ...data };
+    const newData = {...data};
     let currDataSlice = newData;
-
     propNameArray.forEach((propName, i) => {
         /* Have to check if accessor is the last */
         if (i === propNameArray.length - 1) {
@@ -114,27 +111,27 @@ const syntaxHighlight = (jsonObj, highlightedFields) => {
 
 const PostHelper = ({ action, request, highlightedInputs, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly }) => {
     if (typeof request === 'object' || Array.isArray(request)) {
-        if (action == 'post') {
+        if (action === 'post') {
             return (
                 <div>
-                    <ul className="nav nav-tabs">
-                        <li className={'nav'} id={'FE'}><a href={'#console_input_freeEdit'} data-toggle={'tab'} onClick={(e) => {onConsoleToggledFreeEdit(endpoint.id)}}>Editor</a></li>
-                        <li className={'nav active'} id={'RO'}><a href={'#console_input_readOnly'} data-toggle={'tab'} onClick={(e) => {onConsoleToggledReadOnly(endpoint.id)}}>Console</a></li>   
+                    <ul className={'nav nav-tabs'}>
+                        <li className={'nav'} id={'FE'}><a href={'#console_input_freeEdit'} data-toggle={'tab'} onClick={() => {onConsoleToggledFreeEdit(endpoint.id);}}>Editor</a></li>
+                        <li className={'nav active'} id={'RO'}><a href={'#console_input_readOnly'} data-toggle={'tab'} onClick={() => {onConsoleToggledReadOnly(endpoint.id);}}>Console</a></li>   
                     </ul>
-                    <div className="tab-content">
-                        <div id={'console_input_readOnly'} className={'code-snippet-tabcontent active'}><pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null) }} /></div>
-                        <div id={'console_input_freeEdit'} className={'code-snippet-tabcontent'}><textarea id={'console_input'} className={'code-snipet-console'} value={endpoint.requestInput} onChange={(e) => {checkFormatting(onRequestChanged, endpoint.id)}} /></div>                    
+                    <div className={'tab-content'}>
+                        <div id={'console_input_readOnly'} className={'code-snippet-tabcontent active'}><pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null)}}/></div>
+                        <div id={'console_input_freeEdit'} className={'code-snippet-tabcontent'}><textarea id={'console_input'} className={'code-snipet-console'} value={endpoint.requestInput} onChange={(e) => {checkFormatting(endpoint.id, onRequestChanged)}}/></div>                    
                     </div>
                 </div>
             );
         } else {
             return (
-                <div id={'console_input'} className={'code-snippet'}><pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null) }} /></div>
+                <div id={'console_input'} className={'code-snippet'}><pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null)}} /></div>
             );
         }
     } else {
         return (
-            <div className={'code-snippet code-snippet-code-text'} dangerouslySetInnerHTML={{ __html: highlightQueryOrPathParams(request, highlightedInputs) }} />
+            <div className={'code-snippet code-snippet-code-text'} dangerouslySetInnerHTML={{ __html: highlightQueryOrPathParams(request, highlightedInputs)}} />
         );
     }
 };
@@ -144,7 +141,7 @@ function checkFormatting(onRequestChanged, id) {
     onRequestChanged(id, text.value);
 };
 
-const ConsoleLiveData = ({ action, highlightedInputs, path, request, response, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, consoleLoading}) => {
+const ConsoleLiveData = ({action, highlightedInputs, path, request, response, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, consoleLoading}) => {
     return (
         <div>
             <h5 className={'console-output-header'}>{'API Endpoint'}</h5>
@@ -159,10 +156,10 @@ const ConsoleLiveData = ({ action, highlightedInputs, path, request, response, o
                         <PostHelper action={action} 
                                     request={request} 
                                     highlightedInputs={highlightedInputs} 
+                                    onConsoleToggledFreeEdit={onConsoleToggledFreeEdit}
+                                    onConsoleToggledReadOnly={onConsoleToggledReadOnly} 
                                     onRequestChanged={onRequestChanged} 
-                                    endpoint = {endpoint} 
-                                    onConsoleToggledFreeEdit={onConsoleToggledFreeEdit} 
-                                    onConsoleToggledReadOnly={onConsoleToggledReadOnly} />
+                                    endpoint = {endpoint}/>
                     </div>
                     <div className={'col-md-6 console-res-container'}>
                         <h5 className={'console-output-header'}>{'Response'}</h5>
