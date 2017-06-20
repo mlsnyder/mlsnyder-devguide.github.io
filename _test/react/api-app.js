@@ -13372,6 +13372,7 @@ describe('apiApp Reducer', () => {
             "auth": null,
             "apiEndpoints": [
                 {
+                    "consoleError": false,
                     "operationId": "validateCreds",
                     "name": "Validate Credentials",
                     "description": "Convenience API to check credentials. This API is purposefully non-performant.",
