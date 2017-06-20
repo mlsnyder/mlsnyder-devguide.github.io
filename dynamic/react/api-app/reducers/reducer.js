@@ -49,6 +49,7 @@ export default (state = {}, action) => {
         case actionTypes.REQUEST_CHANGED:
         case actionTypes.CONSOLE_TOGGLED_FREE_EDIT:
         case actionTypes.CONSOLE_TOGGLED_READ_ONLY:
+        case actionTypes.CONSOLE_ERROR:
         case actionTypes.ADD_ITEM_TO_POST_BODY_COLLECTION:
         case actionTypes.REMOVE_ITEM_FROM_POST_BODY_COLLECTION:
         case actionTypes.TOGGLE_SHOW_EXCLUDED_POST_BODY_PROPS:

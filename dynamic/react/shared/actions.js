@@ -37,7 +37,6 @@ export default {
         };
     },
     requestChanged: (endpointId, newValue) => {
-        console.log("inside of requestChanged action");
         return {
             type: actionTypes.REQUEST_CHANGED,
             endpointId: endpointId,
@@ -53,6 +52,12 @@ export default {
     consoleToggledFreeEdit: (endpointId) => {
         return {
             type: actionTypes.CONSOLE_TOGGLED_FREE_EDIT,
+            endpointId: endpointId
+        };
+    },
+    consoleError: (endpointId) => {
+        return {
+            type: actionTypes.CONSOLE_ERROR,
             endpointId: endpointId
         };
     },

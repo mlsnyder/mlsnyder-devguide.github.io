@@ -31,7 +31,8 @@ const ApiConsole = (props) => {
                     endpoint={props.endpoint}
                     onConsoleToggledFreeEdit={props.onConsoleToggledFreeEdit}
                     onConsoleToggledReadOnly={props.onConsoleToggledReadOnly}
-                    requestInput={props.requestInput}/>
+                    requestInput={props.requestInput}
+                    consoleError={props.consoleError}/>
             </div>
         </div>
     );
@@ -86,7 +87,8 @@ ApiConsole.propTypes = {
     onConsoleToggledReadOnly: PropTypes.func.isRequired,
     onConsoleToggledFreeEdit: PropTypes.func.isRequired,
     consoleViewFreeEdit: PropTypes.bool.isRequired,
-    requestInput: PropTypes.string.isRequired
+    requestInput: PropTypes.string.isRequired,
+    consoleError: PropTypes.bool.isRequired
 };
 
 export default ApiConsole;

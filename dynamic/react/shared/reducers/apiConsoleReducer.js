@@ -87,12 +87,16 @@ export default (state, action) => {
     };
     switch (action.type) {
         case actionTypes.RESET_CONSOLE:
+            if (newState.consoleViewFreeEdit) {
+                newState.requestInput = "{}";
+            }
             newState = fillOrRemoveSampleData(newState, true);
             newState.qsPath = buildQueryString(reduceParamsToKeyValuePair(newState.queryString));
             newState.curl = buildCurl(newState.sampleAuthHeader, newState);
             newState.apiResponse = undefined;
             break;
         case actionTypes.SUBMIT_DONE:
+            newState.consoleError = false;
             newState.apiResponse = action.apiResponse;
             if (action.error) {
                 newState.error = action.error;
@@ -102,6 +106,7 @@ export default (state, action) => {
             newState = fillOrRemoveSampleData(newState);
             newState.qsPath = buildQueryString(reduceParamsToKeyValuePair(newState.queryString));
             newState.curl = buildCurl(newState.sampleAuthHeader, newState);
+            newState.requestInput = JSON.stringify(newState.postBody);
             break;
         case actionTypes.QUERY_STRING_CHANGED:
             newState = { ...newState,
@@ -133,23 +138,22 @@ export default (state, action) => {
                 try {
                     var postBody = JSON.parse(action.newValue);
                     newState.postBody = postBody;
+                    newState.consoleError = false;
                 } catch (e) {
-                    console.log("the code is formatted incorrectly and the error message should be displayed");
+                    newState.consoleError = true;
                 }
             }
             break;
         case actionTypes.CONSOLE_TOGGLED_READ_ONLY:
-            console.log("in reducer: console Toggled Read Only");
             newState.consoleViewFreeEdit = false;
-            console.log("newState.consoleViewFreeEdit = " + newState.consoleViewFreeEdit);
             break;
         case actionTypes.CONSOLE_TOGGLED_FREE_EDIT:
-            console.log("in reducer: console Toggled Free Edit");
             newState.consoleViewFreeEdit = true;
-            newState.requestInput = JSON.stringify(newState.postBody); //this isn't working for some reason
-            // document.getElementById('console_input').setValue = newState.requestInput; //this doesn't work either and is the wrong way to do it
-            console.log("newState.requestInput = " + newState.requestInput);
-            console.log("newState.consoleViewFreeEdit = " + newState.consoleViewFreeEdit);
+            newState.requestInput = JSON.stringify(newState.postBody, null, 2);
+            break;
+        case actionTypes.CONSOLE_ERROR:
+            newState.consoleError = true;
+            newState.apiResponse = undefined;
             break;
         case actionTypes.ADD_ITEM_TO_POST_BODY_COLLECTION:
             const newArrObj = buildInitialPostBodyData(action.itemSchema, newState.showExcludedPostBodyFields);

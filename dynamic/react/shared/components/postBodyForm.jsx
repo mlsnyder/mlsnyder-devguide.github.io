@@ -12,7 +12,7 @@ const PostBodyForm = (props) => (
         <form className={'api-console-post-form'} onSubmit={
             (e) => {
                 e.preventDefault();
-                props.onSubmitConsoleRequest(props.endpoint, props.consoleViewFreeEdit);
+                props.onSubmitConsoleRequest(props.endpoint);
             }
         }>
         {props.endpoint.consoleViewFreeEdit ? 

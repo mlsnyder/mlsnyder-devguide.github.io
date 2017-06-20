@@ -115,12 +115,11 @@ const syntaxHighlight = (jsonObj, highlightedFields) => {
 const PostHelper = ({ action, request, highlightedInputs, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, requestInput }) => {
     if (typeof request === 'object' || Array.isArray(request)) {
         if (action == 'post') {
-            console.log("endpoint.requestInput = " + endpoint.requestInput);
             return (
                 <div>
                     <ul className="nav nav-tabs">
-                        <li className={'nav active'} id={'RO'}><a href={'#console_input_readOnly'} data-toggle={'tab'} onClick={(e) => {onConsoleToggledReadOnly(endpoint.id)}}>Read Only</a></li>
-                        <li className={'nav'} id={'FE'}><a href={'#console_input_freeEdit'} data-toggle={'tab'} onClick={(e) => {onConsoleToggledFreeEdit(endpoint.id)}}>Free Edit</a></li>
+                        <li className={'nav'} id={'FE'}><a href={'#console_input_freeEdit'} data-toggle={'tab'} onClick={(e) => {onConsoleToggledFreeEdit(endpoint.id)}}>Editor</a></li>
+                        <li className={'nav active'} id={'RO'}><a href={'#console_input_readOnly'} data-toggle={'tab'} onClick={(e) => {onConsoleToggledReadOnly(endpoint.id)}}>Console</a></li>   
                     </ul>
                     <div className="tab-content">
                         <div id={'console_input_readOnly'} className={'code-snippet-tabcontent active'}><pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null) }} /></div>
@@ -145,8 +144,7 @@ function checkFormatting(onRequestChanged, id) {
     onRequestChanged(id, text.value);
 };
 
-const ConsoleLiveData = ({ action, highlightedInputs, path, request, response, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, requestInput }) => {
-    console.log("requestInput --> in consoleLiveData constructor = " + requestInput);
+const ConsoleLiveData = ({ action, highlightedInputs, path, request, response, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, requestInput, consoleError }) => {
     return (
         <div>
             <h5 className={'console-output-header'}>{'API Endpoint'}</h5>
@@ -169,6 +167,10 @@ const ConsoleLiveData = ({ action, highlightedInputs, path, request, response, o
                     </div>
                     <div className={'col-md-6 console-res-container'}>
                         <h5 className={'console-output-header'}>{'Response'}</h5>
+                        {endpoint.consoleError ? 
+                        <div className={'json_error'}>
+                            <h5>{'Incorrect JSON format'}</h5>
+                        </div>: null}
                         <div className={'code-snippet'}><pre dangerouslySetInnerHTML={{ __html: response ? syntaxHighlight(response.body) : ' ' }} /></div>
                     </div>
                 </div> :
@@ -208,7 +210,8 @@ ConsoleLiveData.propTypes = {
     endpoint: PropTypes.object.isRequired,
     onConsoleToggledFreeEdit: PropTypes.func.isRequired,
     onConsoleToggledReadOnly: PropTypes.func.isRequired,
-    requestInput: PropTypes.string.isRequired
+    requestInput: PropTypes.string.isRequired,
+    consoleError: PropTypes.bool.isRequired
 };
 
 export default ConsoleLiveData;

@@ -8,7 +8,7 @@ import ExpanderIcon from './expanderIcon';
 const replaceSpaces = (str) => str.replace(/\s/g, '');
 
 // Give our endpoint an id based on its name for our clientside routing in jekyll
-const EndPointComponent = ({ endpoint, apiType, onFillConsoleSampleData, onSubmitConsoleRequest, onPostBodyInputChanged, onResetConsole, onQueryParamChanged, onPathParamChanged, onAddItemToPostbodyCollection, onRemovePostbodyCollectionItem, onToggleShowExcludedPostBodyProps, onRequestChanged, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, consoleViewFreeEdit, requestInput }) => (
+const EndPointComponent = ({ endpoint, apiType, onFillConsoleSampleData, onSubmitConsoleRequest, onPostBodyInputChanged, onResetConsole, onQueryParamChanged, onPathParamChanged, onAddItemToPostbodyCollection, onRemovePostbodyCollectionItem, onToggleShowExcludedPostBodyProps, onRequestChanged, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, consoleViewFreeEdit, requestInput, consoleError }) => (
     <div className={'endpoint-summary'}>
         <ApiDocumentation endpoint={endpoint} />
         <br />
@@ -40,7 +40,8 @@ const EndPointComponent = ({ endpoint, apiType, onFillConsoleSampleData, onSubmi
                                 onConsoleToggledFreeEdit={onConsoleToggledFreeEdit} 
                                 onConsoleToggledReadOnly={onConsoleToggledReadOnly} 
                                 consoleViewFreeEdit={consoleViewFreeEdit} 
-                                requestInput={requestInput}/>
+                                requestInput={requestInput}
+                                consoleError={consoleError}/>
                 </div>
             </div> : null}
         <EndpointExamples endpoint={endpoint} />
@@ -101,7 +102,8 @@ EndPointComponent.propTypes = {
     onConsoleToggledReadOnly: PropTypes.func.isRequired,
     onConsoleToggledFreeEdit: PropTypes.func.isRequired,
     consoleViewFreeEdit: PropTypes.bool.isRequired,
-    requestInput: PropTypes.string.isRequired
+    requestInput: PropTypes.string.isRequired,
+    consoleError: PropTypes.bool.isRequired
 };
 
 export default EndPointComponent;

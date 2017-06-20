@@ -15,7 +15,7 @@ const QueryOrPathParamsForm = ({endpoint, paramType, params, onInputChange, onSu
         <form className={'api-console-input-section'} onSubmit={
             (e) => {
                 e.preventDefault();
-                onSubmitConsoleRequest(endpoint, consoleViewFreeEdit);
+                onSubmitConsoleRequest(endpoint);
             }
         }> 
         <fieldset disabled>

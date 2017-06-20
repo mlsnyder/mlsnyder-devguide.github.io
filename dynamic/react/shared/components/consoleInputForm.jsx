@@ -7,7 +7,6 @@ import PostBodyForm from './postBodyForm';
 import { hasExampleData } from '../helpers';
 
 const ConsoleInputForm = ({ endpoint, onFillConsoleSampleData, onSubmitConsoleRequest, onPostBodyInputChanged, onResetConsole, onQueryParamChanged, onPathParamChanged, onAddItemToPostbodyCollection, onRemovePostbodyCollectionItem, onToggleShowExcludedPostBodyProps, consoleViewFreeEdit }) => {
-   console.log("consoleinputform --> consoleviewfreeEdit = " + consoleViewFreeEdit); 
     return (
         <div>
             <div>
@@ -25,10 +24,8 @@ const ConsoleInputForm = ({ endpoint, onFillConsoleSampleData, onSubmitConsoleRe
                     className='btn btn-primary submit'
                     onClick={
                         (e) => {
-                            console.log("consoleInputForm: we have clicked the submit button");
                             e.preventDefault();
-                            onSubmitConsoleRequest(endpoint, consoleViewFreeEdit);
-                            console.log("after onSubmitConsoleRequest (in consoleInputForm) and consoleViewFreeEdit = " + consoleViewFreeEdit)
+                            onSubmitConsoleRequest(endpoint);
                         }
                     }
                     type={'button'}
@@ -52,7 +49,7 @@ const ConsoleInputForm = ({ endpoint, onFillConsoleSampleData, onSubmitConsoleRe
                         onClick={
                             (e) => {
                                 e.preventDefault();
-                                onSubmitConsoleRequest(endpoint, consoleViewFreeEdit);
+                                onSubmitConsoleRequest(endpoint);
                             }
                         }
                         type={'button'}

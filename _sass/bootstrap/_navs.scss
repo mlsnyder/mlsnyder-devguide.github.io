@@ -60,12 +60,10 @@
 .nav-tabs {
   //border-bottom: 1px solid $nav-tabs-border-color;
   margin-right: 10px;
-  color: white;
   >li {
     float: right; // Make the list-items overlay the bottom border
     margin-bottom: -1px; // Actual tabs (as links)
-    font-size: 13px;
-    color: white;
+    font-size: 15px;
     >a {
       margin-right: 1px;
       line-height: 5px; //;$line-height-base;

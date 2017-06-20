@@ -22,47 +22,70 @@ const mapDispatchToProps = (dispatch) => {
         onFillConsoleSampleData: (endpointId) => {
             dispatch(actions.fillConsoleSampleData(endpointId));
         },
-        onSubmitConsoleRequest: (endpoint, consoleViewFreeEdit) => {
-            console.log("we are in endpointContainer: onSubmitConsoleRequest");
-            console.log("endpoint.postBody = " + JSON.stringify(endpoint.postBody));
+        onSubmitConsoleRequest: (endpoint) => {
             /* If our endpoint has a defined proxy, use that to make our API console request
              * Otherwise, just use the path specified as `host` in Swagger file
              */
-            if (consoleViewFreeEdit) {
-                console.log("endpointContainer: we have just tried to submit in free edit mode");
+            if (endpoint.consoleViewFreeEdit) {
                 try {
-                    var text = JSON.parse(requestInput);
+                    var text = JSON.parse(endpoint.requestInput);
+                    // create either a proxied or normal API request
+                    let apiRequest;
+                    if (endpoint.proxy) {
+                        // Api Reference has complex pathParam/queryString structure (example, fieldType, etc.)
+                        // Just want key value pairs that our recipes use
+                        apiRequest = submitProxiedRequest.bind(null, {
+                            proxy: endpoint.proxy,
+                            action: endpoint.action,
+                            path: endpoint.path,
+                            queryString: reduceParamsToKeyValuePair(endpoint.queryString),
+                            pathParams: reduceParamsToKeyValuePair(endpoint.pathParams),
+                            postBody: endpoint.postBody || {}
+                        });
+                    } else {
+                        const url = (endpoint.pathParams ? replaceStringPlaceholders(endpoint.path, reduceParamsToKeyValuePair(endpoint.pathParams)) : endpoint.path) + (endpoint.qsPath || '');
+                        var input = document.getElementById("console_input");
+                        const postBody = endpoint.postBody || null;
+                        apiRequest = submitApiRequest.bind(null, url, endpoint.action, postBody);
+                    }
+                    apiRequest()
+                        .then((apiResponse) => {
+                            dispatch(actions.submitConsoleRequest(endpoint.id, apiResponse.body, apiResponse.status, apiResponse.statusMessage));
+                        })
+                        .catch((err) => {
+                            dispatch(actions.submitConsoleRequest(endpoint.id, err, err.message, err.message));
+                        });
                 } catch (err) {
-                    console.log("err.message = " + err.message);
-                    dispatch(actions.submitConsoleRequest(endpoint.id, err, err.message, err.message));
+                    dispatch(actions.consoleError(endpoint.id));
                 }
-            }
-            // create either a proxied or normal API request
-            let apiRequest;
-            if (endpoint.proxy) {
-                // Api Reference has complex pathParam/queryString structure (example, fieldType, etc.)
-                // Just want key value pairs that our recipes use
-                apiRequest = submitProxiedRequest.bind(null, {
-                    proxy: endpoint.proxy,
-                    action: endpoint.action,
-                    path: endpoint.path,
-                    queryString: reduceParamsToKeyValuePair(endpoint.queryString),
-                    pathParams: reduceParamsToKeyValuePair(endpoint.pathParams),
-                    postBody: endpoint.postBody || {}
-                });
             } else {
-                const url = (endpoint.pathParams ? replaceStringPlaceholders(endpoint.path, reduceParamsToKeyValuePair(endpoint.pathParams)) : endpoint.path) + (endpoint.qsPath || '');
-                var input = document.getElementById("console_input");
-                const postBody = endpoint.postBody || null;
-                apiRequest = submitApiRequest.bind(null, url, endpoint.action, postBody);
+                // create either a proxied or normal API request
+                let apiRequest;
+                if (endpoint.proxy) {
+                    // Api Reference has complex pathParam/queryString structure (example, fieldType, etc.)
+                    // Just want key value pairs that our recipes use
+                    apiRequest = submitProxiedRequest.bind(null, {
+                        proxy: endpoint.proxy,
+                        action: endpoint.action,
+                        path: endpoint.path,
+                        queryString: reduceParamsToKeyValuePair(endpoint.queryString),
+                        pathParams: reduceParamsToKeyValuePair(endpoint.pathParams),
+                        postBody: endpoint.postBody || {}
+                    });
+                } else {
+                    const url = (endpoint.pathParams ? replaceStringPlaceholders(endpoint.path, reduceParamsToKeyValuePair(endpoint.pathParams)) : endpoint.path) + (endpoint.qsPath || '');
+                    var input = document.getElementById("console_input");
+                    const postBody = endpoint.postBody || null;
+                    apiRequest = submitApiRequest.bind(null, url, endpoint.action, postBody);
+                }
+                apiRequest()
+                    .then((apiResponse) => {
+                        dispatch(actions.submitConsoleRequest(endpoint.id, apiResponse.body, apiResponse.status, apiResponse.statusMessage));
+                    })
+                    .catch((err) => {
+                        dispatch(actions.submitConsoleRequest(endpoint.id, err, err.message, err.message));
+                    });
             }
-            apiRequest()
-                .then((apiResponse) => {
-                    dispatch(actions.submitConsoleRequest(endpoint.id, apiResponse.body, apiResponse.status, apiResponse.statusMessage));
-                })
-                .catch((err) => {
-                    dispatch(actions.submitConsoleRequest(endpoint.id, err, err.message, err.message));
-                });
         },
         onPostBodyInputChanged: (endpointId, paramName, newValue) => {
             dispatch(actions.postBodyInputChanged(endpointId, paramName, newValue));
@@ -71,11 +94,9 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(actions.requestChanged(endpointId, newValue));
         },
         onConsoleToggledReadOnly: (endpointId) => {
-            console.log("in endpointContainer: in onConsoleToggledReadOnly");
             dispatch(actions.consoleToggledReadOnly(endpointId));
         },
         onConsoleToggledFreeEdit: (endpointId) => {
-            console.log("in endpointContainer: in onConsoleToggledFreeEdit");
             dispatch(actions.consoleToggledFreeEdit(endpointId));
         },
         onResetConsole: (endpointId) => {
