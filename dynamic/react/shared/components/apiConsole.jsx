@@ -30,9 +30,7 @@ const ApiConsole = (props) => {
                     onRequestChanged={props.onRequestChanged} 
                     endpoint={props.endpoint}
                     onConsoleToggledFreeEdit={props.onConsoleToggledFreeEdit}
-                    onConsoleToggledReadOnly={props.onConsoleToggledReadOnly}
-                    requestInput={props.requestInput}
-                    consoleError={props.consoleError}/>
+                    onConsoleToggledReadOnly={props.onConsoleToggledReadOnly}/>
             </div>
         </div>
     );
@@ -85,10 +83,7 @@ ApiConsole.propTypes = {
     onToggleShowExcludedPostBodyProps: PropTypes.func.isRequired,
     onRequestChanged: PropTypes.func.isRequired,
     onConsoleToggledReadOnly: PropTypes.func.isRequired,
-    onConsoleToggledFreeEdit: PropTypes.func.isRequired,
-    consoleViewFreeEdit: PropTypes.bool.isRequired,
-    requestInput: PropTypes.string.isRequired,
-    consoleError: PropTypes.bool.isRequired
+    onConsoleToggledFreeEdit: PropTypes.func.isRequired
 };
 
 export default ApiConsole;

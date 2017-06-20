@@ -8,7 +8,7 @@ import ExpanderIcon from './expanderIcon';
 const replaceSpaces = (str) => str.replace(/\s/g, '');
 
 // Give our endpoint an id based on its name for our clientside routing in jekyll
-const EndPointComponent = ({ endpoint, apiType, onFillConsoleSampleData, onSubmitConsoleRequest, onPostBodyInputChanged, onResetConsole, onQueryParamChanged, onPathParamChanged, onAddItemToPostbodyCollection, onRemovePostbodyCollectionItem, onToggleShowExcludedPostBodyProps, onRequestChanged, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, consoleViewFreeEdit, requestInput, consoleError }) => (
+const EndPointComponent = ({ endpoint, apiType, onFillConsoleSampleData, onSubmitConsoleRequest, onPostBodyInputChanged, onResetConsole, onQueryParamChanged, onPathParamChanged, onAddItemToPostbodyCollection, onRemovePostbodyCollectionItem, onToggleShowExcludedPostBodyProps, onRequestChanged, onConsoleToggledFreeEdit, onConsoleToggledReadOnly }) => (
     <div className={'endpoint-summary'}>
         <ApiDocumentation endpoint={endpoint} />
         <br />
@@ -38,10 +38,7 @@ const EndPointComponent = ({ endpoint, apiType, onFillConsoleSampleData, onSubmi
                                 showExcludedPostBodyFields={endpoint.showExcludedPostBodyFields} 
                                 onRequestChanged={onRequestChanged} 
                                 onConsoleToggledFreeEdit={onConsoleToggledFreeEdit} 
-                                onConsoleToggledReadOnly={onConsoleToggledReadOnly} 
-                                consoleViewFreeEdit={consoleViewFreeEdit} 
-                                requestInput={requestInput}
-                                consoleError={consoleError}/>
+                                onConsoleToggledReadOnly={onConsoleToggledReadOnly} />
                 </div>
             </div> : null}
         <EndpointExamples endpoint={endpoint} />
@@ -100,10 +97,7 @@ EndPointComponent.propTypes = {
     sampleContentType: PropTypes.array,
     onRequestChanged: PropTypes.func.isRequired,
     onConsoleToggledReadOnly: PropTypes.func.isRequired,
-    onConsoleToggledFreeEdit: PropTypes.func.isRequired,
-    consoleViewFreeEdit: PropTypes.bool.isRequired,
-    requestInput: PropTypes.string.isRequired,
-    consoleError: PropTypes.bool.isRequired
+    onConsoleToggledFreeEdit: PropTypes.func.isRequired
 };
 
 export default EndPointComponent;

@@ -6,7 +6,7 @@ import QueryOrPathParamsForm from './queryOrPathParamsForm';
 import PostBodyForm from './postBodyForm';
 import { hasExampleData } from '../helpers';
 
-const ConsoleInputForm = ({ endpoint, onFillConsoleSampleData, onSubmitConsoleRequest, onPostBodyInputChanged, onResetConsole, onQueryParamChanged, onPathParamChanged, onAddItemToPostbodyCollection, onRemovePostbodyCollectionItem, onToggleShowExcludedPostBodyProps, consoleViewFreeEdit }) => {
+const ConsoleInputForm = ({ endpoint, onFillConsoleSampleData, onSubmitConsoleRequest, onPostBodyInputChanged, onResetConsole, onQueryParamChanged, onPathParamChanged, onAddItemToPostbodyCollection, onRemovePostbodyCollectionItem, onToggleShowExcludedPostBodyProps }) => {
     return (
         <div>
             <div>
@@ -39,9 +39,9 @@ const ConsoleInputForm = ({ endpoint, onFillConsoleSampleData, onSubmitConsoleRe
                     {'Reset'}
                 </span>
             </div>
-            {endpoint.pathParams ? <QueryOrPathParamsForm endpoint={endpoint} onInputChange={onPathParamChanged} onSubmitConsoleRequest={onSubmitConsoleRequest} paramType={'PATH'} params={endpoint.pathParams} consoleViewFreeEdit={consoleViewFreeEdit} /> : null}
-            {endpoint.queryString ? <QueryOrPathParamsForm endpoint={endpoint} onInputChange={onQueryParamChanged} onSubmitConsoleRequest={onSubmitConsoleRequest} paramType={'QUERY_STRING'} params={endpoint.queryString} consoleViewFreeEdit= {consoleViewFreeEdit} /> : null}
-            {endpoint.requestSchema ? <PostBodyForm endpoint={endpoint} name={endpoint.name.toLowerCase() + '_' + endpoint.action} onAddItemToPostbodyCollection={onAddItemToPostbodyCollection} onPostBodyInputChanged={onPostBodyInputChanged} onRemovePostbodyCollectionItem={onRemovePostbodyCollectionItem} onSubmitConsoleRequest={onSubmitConsoleRequest} onToggleShowExcludedPostBodyProps={onToggleShowExcludedPostBodyProps} consoleViewFreeEdit={consoleViewFreeEdit} /> : null}
+            {endpoint.pathParams ? <QueryOrPathParamsForm endpoint={endpoint} onInputChange={onPathParamChanged} onSubmitConsoleRequest={onSubmitConsoleRequest} paramType={'PATH'} params={endpoint.pathParams} /> : null}
+            {endpoint.queryString ? <QueryOrPathParamsForm endpoint={endpoint} onInputChange={onQueryParamChanged} onSubmitConsoleRequest={onSubmitConsoleRequest} paramType={'QUERY_STRING'} params={endpoint.queryString} /> : null}
+            {endpoint.requestSchema ? <PostBodyForm endpoint={endpoint} name={endpoint.name.toLowerCase() + '_' + endpoint.action} onAddItemToPostbodyCollection={onAddItemToPostbodyCollection} onPostBodyInputChanged={onPostBodyInputChanged} onRemovePostbodyCollectionItem={onRemovePostbodyCollectionItem} onSubmitConsoleRequest={onSubmitConsoleRequest} onToggleShowExcludedPostBodyProps={onToggleShowExcludedPostBodyProps} /> : null}
             {endpoint.requestSchema ?
                 <div style={{ marginBottom: '10px' }}>
                     <button
@@ -79,8 +79,7 @@ ConsoleInputForm.propTypes = {
     onRemovePostbodyCollectionItem: PropTypes.func.isRequired,
     onResetConsole: PropTypes.func.isRequired,
     onSubmitConsoleRequest: PropTypes.func.isRequired,
-    onToggleShowExcludedPostBodyProps: PropTypes.func.isRequired,
-    consoleViewFreeEdit: PropTypes.bool.isRequired
+    onToggleShowExcludedPostBodyProps: PropTypes.func.isRequired
 };
 
 export default ConsoleInputForm;

@@ -10,7 +10,7 @@ const PARAM_TYPES = {
     PATH: 'PATH'
 };
 
-const QueryOrPathParamsForm = ({endpoint, paramType, params, onInputChange, onSubmitConsoleRequest, consoleViewFreeEdit}) => (
+const QueryOrPathParamsForm = ({endpoint, paramType, params, onInputChange, onSubmitConsoleRequest}) => (
     <div>
         <form className={'api-console-input-section'} onSubmit={
             (e) => {
@@ -130,7 +130,6 @@ QueryOrPathParamsForm.propTypes = {
     onInputChange: PropTypes.func.isRequired,
     onSubmitConsoleRequest: PropTypes.func.isRequired,
     paramType: PropTypes.oneOf(['QUERY_STRING', 'PATH']).isRequired,
-    consoleViewFreeEdit: PropTypes.bool.isRequired,
     params: PropTypes.objectOf(
         PropTypes.shape({
             description: PropTypes.string,

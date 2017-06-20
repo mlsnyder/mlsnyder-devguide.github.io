@@ -90,8 +90,7 @@ PostBodyForm.propTypes = {
     onPostBodyInputChanged: PropTypes.func.isRequired,
     onRemovePostbodyCollectionItem: PropTypes.func.isRequired,
     onSubmitConsoleRequest: PropTypes.func.isRequired,
-    onToggleShowExcludedPostBodyProps: PropTypes.func.isRequired,
-    consoleViewFreeEdit: PropTypes.bool.isRequired
+    onToggleShowExcludedPostBodyProps: PropTypes.func.isRequired
 };
 
 export default PostBodyForm;

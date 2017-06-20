@@ -112,7 +112,7 @@ const syntaxHighlight = (jsonObj, highlightedFields) => {
     return highlightPunctuation(json);
 };
 
-const PostHelper = ({ action, request, highlightedInputs, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, requestInput }) => {
+const PostHelper = ({ action, request, highlightedInputs, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly }) => {
     if (typeof request === 'object' || Array.isArray(request)) {
         if (action == 'post') {
             return (
@@ -144,7 +144,7 @@ function checkFormatting(onRequestChanged, id) {
     onRequestChanged(id, text.value);
 };
 
-const ConsoleLiveData = ({ action, highlightedInputs, path, request, response, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, requestInput, consoleError }) => {
+const ConsoleLiveData = ({ action, highlightedInputs, path, request, response, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly }) => {
     return (
         <div>
             <h5 className={'console-output-header'}>{'API Endpoint'}</h5>
@@ -162,8 +162,7 @@ const ConsoleLiveData = ({ action, highlightedInputs, path, request, response, o
                                     onRequestChanged={onRequestChanged} 
                                     endpoint = {endpoint} 
                                     onConsoleToggledFreeEdit={onConsoleToggledFreeEdit} 
-                                    onConsoleToggledReadOnly={onConsoleToggledReadOnly} 
-                                    requestInput={requestInput}/>
+                                    onConsoleToggledReadOnly={onConsoleToggledReadOnly} />
                     </div>
                     <div className={'col-md-6 console-res-container'}>
                         <h5 className={'console-output-header'}>{'Response'}</h5>
@@ -209,9 +208,7 @@ ConsoleLiveData.propTypes = {
     onRequestChanged: PropTypes.func.isRequired,
     endpoint: PropTypes.object.isRequired,
     onConsoleToggledFreeEdit: PropTypes.func.isRequired,
-    onConsoleToggledReadOnly: PropTypes.func.isRequired,
-    requestInput: PropTypes.string.isRequired,
-    consoleError: PropTypes.bool.isRequired
+    onConsoleToggledReadOnly: PropTypes.func.isRequired
 };
 
 export default ConsoleLiveData;
