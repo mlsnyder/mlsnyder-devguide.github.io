@@ -73,17 +73,17 @@ ApiConsole.propTypes = {
         showExcludedPostBodyFields: PropTypes.bool.isRequired
     }).isRequired,
     onAddItemToPostbodyCollection: PropTypes.func.isRequired,
+    onConsoleToggledFreeEdit: PropTypes.func.isRequired,
+    onConsoleToggledReadOnly: PropTypes.func.isRequired,
     onFillConsoleSampleData: PropTypes.func.isRequired,
     onPathParamChanged: PropTypes.func.isRequired,
     onPostBodyInputChanged: PropTypes.func.isRequired,
     onQueryParamChanged: PropTypes.func.isRequired,
     onRemovePostbodyCollectionItem: PropTypes.func.isRequired,
+    onRequestChanged: PropTypes.func.isRequired,
     onResetConsole: PropTypes.func.isRequired,
     onSubmitConsoleRequest: PropTypes.func.isRequired,
-    onToggleShowExcludedPostBodyProps: PropTypes.func.isRequired,
-    onRequestChanged: PropTypes.func.isRequired,
-    onConsoleToggledReadOnly: PropTypes.func.isRequired,
-    onConsoleToggledFreeEdit: PropTypes.func.isRequired
+    onToggleShowExcludedPostBodyProps: PropTypes.func.isRequired   
 };
 
 export default ApiConsole;

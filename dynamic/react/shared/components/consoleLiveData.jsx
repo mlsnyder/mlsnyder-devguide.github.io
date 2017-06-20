@@ -41,6 +41,7 @@ const addHighlightPlaceholderToPostBody = (propertyPath, data) => {
     const propNameArray = propertyPath.split(':');
     const newData = {...data};
     let currDataSlice = newData;
+
     propNameArray.forEach((propName, i) => {
         /* Have to check if accessor is the last */
         if (i === propNameArray.length - 1) {
@@ -108,8 +109,12 @@ const syntaxHighlight = (jsonObj, highlightedFields) => {
     });
     return highlightPunctuation(json);
 };
+function checkFormatting(onRequestChanged, id){
+    var text = document.getElementById('console_input');
+    onRequestChanged(id, text.value);
+};
 
-const PostHelper = ({ action, request, highlightedInputs, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly }) => {
+const PostHelper = ({action, endpoint, request, highlightedInputs, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, onRequestChanged}) => {
     if (typeof request === 'object' || Array.isArray(request)) {
         if (action === 'post') {
             return (
@@ -120,7 +125,7 @@ const PostHelper = ({ action, request, highlightedInputs, onRequestChanged, endp
                     </ul>
                     <div className={'tab-content'}>
                         <div id={'console_input_readOnly'} className={'code-snippet-tabcontent active'}><pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null)}}/></div>
-                        <div id={'console_input_freeEdit'} className={'code-snippet-tabcontent'}><textarea id={'console_input'} className={'code-snipet-console'} value={endpoint.requestInput} onChange={(e) => {checkFormatting(endpoint.id, onRequestChanged)}}/></div>                    
+                        <div id={'console_input_freeEdit'} className={'code-snippet-tabcontent'}><textarea id={'console_input'} className={'code-snipet-console'} value={endpoint.requestInput} onChange={() => {checkFormatting(endpoint.id, onRequestChanged);}}/></div>                    
                     </div>
                 </div>
             );
@@ -136,12 +141,7 @@ const PostHelper = ({ action, request, highlightedInputs, onRequestChanged, endp
     }
 };
 
-function checkFormatting(onRequestChanged, id) {
-    var text = document.getElementById('console_input');
-    onRequestChanged(id, text.value);
-};
-
-const ConsoleLiveData = ({action, highlightedInputs, path, request, response, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, consoleLoading}) => {
+const ConsoleLiveData = ({action, consoleLoading, highlightedInputs, path, request, response, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, onRequestChanged, endpoint}) => {
     return (
         <div>
             <h5 className={'console-output-header'}>{'API Endpoint'}</h5>
@@ -149,7 +149,7 @@ const ConsoleLiveData = ({action, highlightedInputs, path, request, response, on
             <h5 className={'console-output-header'}>{'Method'}</h5>
             <div className={'code-snippet-plaintext'}>{action.toUpperCase()}</div>
             {request ?
-                <div className={'row'} style={{ marginBottom: '8px' }}>
+                <div className={'row'} style={{marginBottom: '8px'}}>
                     <div className={'col-md-6 console-req-container'}>
                         <h5 className={'console-output-header'}>{'Request'}</h5>
                         {/* eslint-disable react/no-danger */}

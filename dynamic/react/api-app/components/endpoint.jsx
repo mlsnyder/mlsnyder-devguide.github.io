@@ -84,7 +84,7 @@ EndPointComponent.propTypes = {
     onResetConsole: PropTypes.func.isRequired,
     onSubmitConsoleRequest: PropTypes.func.isRequired,
     onToggleShowExcludedPostBodyProps: PropTypes.func.isRequired,
-    sampleContentType: PropTypes.array 
+    sampleContentType: PropTypes.array
 };
 
 export default EndPointComponent;

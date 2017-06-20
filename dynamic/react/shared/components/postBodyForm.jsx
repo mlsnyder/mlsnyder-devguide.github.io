@@ -8,14 +8,14 @@ const PostBodyForm = (props) => (
         {hasExcludedProperties(props.endpoint.requestSchema) ?
             <div className={'clickable'} onClick={props.onToggleShowExcludedPostBodyProps.bind(null, props.endpoint.id)}>
                 <span className={`glyphicon glyphicon-${props.endpoint.showExcludedPostBodyFields ? 'minus' : 'plus'}`} /><span>{` ${props.endpoint.showExcludedPostBodyFields ? 'Hide advanced' : 'Show all'} request attributes`}</span>
-            </div> : null} 
+            </div> : null}
         <form className={'api-console-post-form'} onSubmit={
             (e) => {
                 e.preventDefault();
                 props.onSubmitConsoleRequest(props.endpoint);
             }
         }>
-        {props.endpoint.consoleViewFreeEdit ? 
+        {props.endpoint.consoleViewFreeEdit ?
         <fieldset disabled>
                 <PostBodyFormItem
                     canRemove={false}
@@ -43,7 +43,7 @@ const PostBodyForm = (props) => (
                     showExcludedPostBodyFields={props.endpoint.showExcludedPostBodyFields}
                 />
         }
-         <input style={{display: 'none'}} type={'submit'} value={'submit'}/> 
+         <input style={{display: 'none'}} type={'submit'} value={'submit'}/>
         </form>
     </div>
 );

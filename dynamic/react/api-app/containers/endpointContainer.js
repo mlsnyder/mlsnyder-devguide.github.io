@@ -46,6 +46,7 @@ const mapDispatchToProps = (dispatch) => {
                     } else {
                         const url = (endpoint.pathParams ? replaceStringPlaceholders(endpoint.path, reduceParamsToKeyValuePair(endpoint.pathParams)) : endpoint.path) + (endpoint.qsPath || '');
                         const postBody = endpoint.postBody || null;
+
                         apiRequest = submitApiRequest.bind(null, url, endpoint.action, postBody);
                     }
                     // Show Animation here until promise or isLoading comes back or w/e

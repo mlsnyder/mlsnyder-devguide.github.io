@@ -63,7 +63,7 @@ PostmanCollection.propTypes = {
             request: PropTypes.shape({
                 body: PropTypes.shape({
                     mode: PropTypes.oneOf(['raw', 'formdata']).isRequired,
-                    raw: PropTypes.string, //this needs to become the example data
+                    raw: PropTypes.string, 
                     formdata: PropTypes.array
                 }).isRequired,
                 description: PropTypes.string,

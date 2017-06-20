@@ -11,7 +11,7 @@ const PostBodyFormItem = ({name, itemSchema, itemValue, endpointId, displayName,
     }
     // Simplest case: Input is a primitive field (string, bool, etc), so just render the actual input form group
     if (itemSchema.fieldType && itemSchema.fieldType !== 'array') {
-        return (        
+        return (    
             <div className={'form-group'}>
                 <label className={'api-label-text'} htmlFor={uid}>{displayName}</label>
                 {canRemove ?
