@@ -107,6 +107,7 @@ export default (state, action) => {
             newState.qsPath = buildQueryString(reduceParamsToKeyValuePair(newState.queryString));
             newState.curl = buildCurl(newState.sampleAuthHeader, newState);
             newState.requestInput = JSON.stringify(newState.postBody);
+            newState.consoleError = false;
             break;
         case actionTypes.QUERY_STRING_CHANGED:
             newState = { ...newState,
@@ -146,6 +147,7 @@ export default (state, action) => {
             break;
         case actionTypes.CONSOLE_TOGGLED_READ_ONLY:
             newState.consoleViewFreeEdit = false;
+            newState.consoleError = false;
             break;
         case actionTypes.CONSOLE_TOGGLED_FREE_EDIT:
             newState.consoleViewFreeEdit = true;

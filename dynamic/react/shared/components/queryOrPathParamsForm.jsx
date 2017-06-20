@@ -10,15 +10,16 @@ const PARAM_TYPES = {
     PATH: 'PATH'
 };
 
-const QueryOrPathParamsForm = ({endpoint, paramType, params, onInputChange, onSubmitConsoleRequest, consoleViewFreeEdit}) => {
-    return (
+const QueryOrPathParamsForm = ({endpoint, paramType, params, onInputChange, onSubmitConsoleRequest, consoleViewFreeEdit}) => (
+    <div>
         <form className={'api-console-input-section'} onSubmit={
             (e) => {
                 e.preventDefault();
                 onSubmitConsoleRequest(endpoint);
             }
         }> 
-        <fieldset disabled>
+        {endpoint.consoleViewFreeEdit ?
+            <fieldset disabled>
             <h4 className={'api-console-section-header'}>{paramType === PARAM_TYPES.QUERY_STRING ? 'Query String' : 'Path Parameters'}</h4>
             {Object.keys(params).map((key, i) => {
                 return (
@@ -50,11 +51,45 @@ const QueryOrPathParamsForm = ({endpoint, paramType, params, onInputChange, onSu
                     </div>
                 );
             })}
-            <input style={{display: 'none'}} type={'submit'} value={'submit'}/>
-        </fieldset>
+            </fieldset> :
+            <fieldset>
+            <h4 className={'api-console-section-header'}>{paramType === PARAM_TYPES.QUERY_STRING ? 'Query String' : 'Path Parameters'}</h4>
+                {Object.keys(params).map((key, i) => {
+                    return (
+                        <div className={'form-group'} key={i}>
+                            <label className={'api-label-text'} htmlFor={`${endpoint.id}-qs-${i}`}>{key}</label>
+                            {params[key].enum && params[key].enum.length ?
+                                <select
+                                    className={'form-control'}
+                                    id={`${endpoint.id}-qs-${i}`}
+                                    onChange={(e) => {
+                                        onInputChange(e.target.value, key, endpoint.id);
+                                    }}
+                                    value={params[key].value}
+                                >
+                                    <option value={''}>{''}</option>
+                                    {params[key].enum.map((option, ii) => (<option key={ii} value={option}>{option}</option>))}
+                                </select> :
+                                <input
+                                    className={'form-control'}
+                                    id={`${endpoint.id}-qs-${i}`}
+                                    onChange={
+                                        (e) => {
+                                            onInputChange(e.target.value, key, endpoint.id);
+                                        }
+                                    }
+                                    value={params[key].value}
+                                />
+                            }
+                        </div>
+                    );
+                })}
+            </fieldset>
+        }
+        <input style={{display: 'none'}} type={'submit'} value={'submit'}/>
         </form>
+        </div>
     );
-};
 
 QueryOrPathParamsForm.displayName = 'Request Parameters';
 QueryOrPathParamsForm.propTypes = {
