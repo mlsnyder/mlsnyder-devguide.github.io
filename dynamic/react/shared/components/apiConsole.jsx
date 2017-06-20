@@ -24,6 +24,7 @@ const ApiConsole = (props) => {
                 <ConsoleLiveData
                     endpoint={props.endpoint}
                     action={props.endpoint.action}
+                    consoleLoading={props.endpoint.apiConsoleLoading}
                     path={props.endpoint.path}
                     request={getRequest(props.endpoint)}
                     response={props.endpoint.apiResponse}

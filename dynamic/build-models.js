@@ -4,6 +4,7 @@ import yaml from 'js-yaml';
 import mkdirp from 'mkdirp';
 import SWAGGER_CONFIG from './SWAGGER_CONFIG';
 import {buildDefinitions} from './build-models-helpers';
+import {buildEnumFromModel} from './build-enums';
 
 const dataDir = `${__dirname}/../_data/swagger`;
 
@@ -88,12 +89,15 @@ endpoint_links: []
 ---
 
 {% assign name = "${def}" %}
+{% assign path = "${dir}" %}
 {% assign model_ = site.data.swagger${fields}[name] %}
 {% assign ep = '${prettyJson}' %}
 
-{% include models.html name=name ${(prettyJson) ? 'examplePretty=ep' : ''} model=model_ %}
+{% include models.html name=name path=path ${(prettyJson) ? 'examplePretty=ep' : ''} model=model_ %}
 
 {% include disqus.html %}`;
+
+        buildEnumFromModel({dir, apiName, product, def}, defs[def]);
 
         fs.writeFile(`${dir}/${def}.html`, html, function(err) {
             if (err) {
@@ -131,7 +135,7 @@ fs.symlink(swagPath, dataPath, function() {
         try {
             const filename = swagPath + '/' + key;
             const data = loadFile(filename);
-            const allDefinitions = buildDefinitions(data.definitions);
+            const allDefinitions = buildDefinitions(data.definitions, data.paths, data['x-group-by-tags']);
 
             const {name, product} = SWAGGER_CONFIG[key];
 
@@ -147,7 +151,7 @@ fs.symlink(swagPath, dataPath, function() {
 
             buildHtml(newFilename, allDefinitions, name, product);
         } catch (e) {
-            console.log(`\x1b[31mFailed to write ${key} models \x1b[0m`);
+            console.log(`\x1b[31mFailed to write ${key} models: ${e} \x1b[0m`);
             // Some Swagger_Config files don't exist, or are missing definitions to parse
             // Skip these!
         }

@@ -7,13 +7,9 @@ import ApiDocModelLink from './apiDocModelLink';
 
 const ApiDocumentation = ({endpoint}) => (
     <div>
-        <h1 id={endpoint.operationId}>{endpoint.name || endpoint.operationId}</h1>
+        <h1 id={endpoint.operationId}>{endpoint.operationId}</h1>
         <table className='styled-table'>
             <thead>
-                <tr>
-                    <th>{'API'}</th>
-                    <td>{endpoint.operationId}</td>
-                </tr>
                 <tr>
                     <th>{'Purpose'}</th>
                     <td>{endpoint.name}</td>
@@ -27,9 +23,15 @@ const ApiDocumentation = ({endpoint}) => (
                     <td>{decodeURI(url.parse(endpoint.path).pathname)}</td>
                 </tr>
                 <tr>
-                    <th>{'URL'}</th>
+                    <th>{(endpoint.productionPath) ? 'URL (SANDBOX)' : 'URL'}</th>
                     <td>{endpoint.path}</td>
                 </tr>
+                {(endpoint.productionPath) ?
+                    <tr>
+                        <th>{'URL (PRODUCTION)'}</th>
+                        <td>{endpoint.productionPath}</td>
+                    </tr> : null
+                }
                 <tr>
                     <th>{'Query String'}</th>
                     <td>{(endpoint.queryString) ? '?' : ''}{Object.keys(endpoint.queryString || {}).join('&')}</td>
@@ -58,9 +60,9 @@ const ApiDocumentation = ({endpoint}) => (
                     <th>{'Summary'}</th>
                 </tr>
             </thead>
-            <ApiDocumentationParam params={endpoint.pathParams} type={'UriPath'} />
-            <ApiDocumentationParam params={endpoint.headerParams} type={'Header'} />
-            <ApiDocumentationParam params={endpoint.queryString} type={'QueryString'} />
+            <ApiDocumentationParam currentOperation={endpoint.operationId} params={endpoint.pathParams} type={'UriPath'} />
+            <ApiDocumentationParam currentOperation={endpoint.operationId} params={endpoint.headerParams} type={'Header'} />
+            <ApiDocumentationParam currentOperation={endpoint.operationId} params={endpoint.queryString} type={'QueryString'} />
             {endpoint.requestSchemaWithRefs ?
                 <tbody>
                     <tr>

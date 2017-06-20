@@ -82,7 +82,7 @@ const PostBodyFormItem = ({name, itemSchema, itemValue, endpointId, displayName,
         return (
             <div>
                 <PostBodyFormSection canRemove={false} displayName={displayName} endpointId={endpointId} onRemovePostbodyCollectionItem={onRemovePostbodyCollectionItem} propertyName={name}>
-                    {itemValue.map((itm, i) => {
+                    {(itemValue) ? itemValue.map((itm, i) => {
                         return (
                             <PostBodyFormItem
                                 canRemove={itemValue.length > 1}
@@ -97,7 +97,7 @@ const PostBodyFormItem = ({name, itemSchema, itemValue, endpointId, displayName,
                                 onRemovePostbodyCollectionItem={onRemovePostbodyCollectionItem}
                                 showExcludedPostBodyFields={showExcludedPostBodyFields}
                             />);
-                    })}
+                    }) : null}
                 </PostBodyFormSection>
                 <div className={'clickable'} onClick={onAddItemToPostbodyCollection.bind(null, name, endpointId, arraySchema)}>
                     <span className={'glyphicon glyphicon-plus'} /><span className={''}>{`  Add ${displayName === 'Post Body' ? 'Item' : displayName}`}</span>
@@ -116,7 +116,7 @@ const PostBodyFormItem = ({name, itemSchema, itemValue, endpointId, displayName,
                     endpointId={endpointId}
                     itemName={itemKey}
                     itemSchema={itemSchema[itemKey]}
-                    itemValue={itemValue[itemKey]}
+                    itemValue={(itemValue) ? itemValue[itemKey] : undefined}
                     key={i}
                     name={`${name ? name + ':' : ''}` + itemKey}
                     onAddItemToPostbodyCollection={onAddItemToPostbodyCollection}

@@ -67,15 +67,25 @@ const buildRequestParams = (params, paramType) => {
 
 // Builds a schema of what a request to a particular endpoint should look like, based on its Swagger definition
 const buildRequestSchema = (endpointParams, isRef) => {
-    const postBodyParams = endpointParams.filter((p) => (p.in === 'body'));
+    let postBodyParams = endpointParams.filter((p) => (p.in === 'body'));
+
+    if (postBodyParams.length === 0) {
+        return {requestSchema: null};
+    }
 
     // Can only be one post body per request, so safe to take first item
+    postBodyParams = postBodyParams[0];
+
+    // if isRef is true, the swagger doc has not been dereference and therefore
+    //   does not need to build the schema
     if (isRef) {
-        // if isRef is true, the swagger doc has not been dereference and therefore
-        //   does not need to build the schema
-        return postBodyParams.length ? postBodyParams[0] : null;
+        return {requestSchema: postBodyParams};
     }
-    return postBodyParams.length ? buildSchema(postBodyParams[0].schema) : null;
+
+    const result = buildSchema(postBodyParams.schema);
+    const example = postBodyParams.schema.example;
+
+    return {requestSchemaExample: example, requestSchema: result};
 };
 
 // const buildTagEndpointMap = (tags)
@@ -85,7 +95,6 @@ export default (api, apiWithRefs, rootPath) => {
 
     const scheme = api.schemes && api.schemes[0] ? api.schemes[0] : 'http';
     const root = (scheme && api.host && api.basePath) ? scheme + '://' + api.host + (api.basePath !== '/' ? api.basePath : '') : rootPath;
-
     const apiProxy = api['x-api-proxy'] || null;
 
     const swaggerData = {
@@ -123,8 +132,13 @@ export default (api, apiWithRefs, rootPath) => {
                     action: action,
                     sampleAuthHeader: swaggerData.sampleAuthHeader,
                     // Determines whether or not we show API console input fields for params in the 'x-excludedProperties' array in Swagger
-                    showExcludedPostBodyFields: false
+                    showExcludedPostBodyFields: false,
+                    apiConsoleLoading: false
                 };
+
+                if (api['x-production-host']) {
+                    apiMethod.productionPath = (scheme && api.basePath) ? scheme + '://' + api['x-production-host'] + (api.basePath !== '/' ? api.basePath : '') + k : rootPath + k;
+                }
 
                 // Update `tagMap` for this endpoint
                 if (swaggerData.tagMap && endpoint[action].tags && endpoint[action].tags.length) {
@@ -155,11 +169,12 @@ export default (api, apiWithRefs, rootPath) => {
                     apiMethod.qsPath = buildQueryString(reduceParamsToKeyValuePair(queryString));
                 }
 
-                const requestSchema = buildRequestSchema(endpointParams);
-                const requestSchemaWithRefs = buildRequestSchema(endpointParamsWithRefs, true);
+                const {requestSchemaExample, requestSchema} = buildRequestSchema(endpointParams);
+                const requestSchemaWithRefs = buildRequestSchema(endpointParamsWithRefs, true).requestSchema;
 
                 if (requestSchema) {
                     apiMethod.requestSchema = requestSchema;
+                    apiMethod.requestSchemaExample = requestSchemaExample;
                     apiMethod.requestSchemaWithRefs = requestSchemaWithRefs;
                     apiMethod.postBody = buildInitialPostBodyData(requestSchema, apiMethod.showExcludedPostBodyFields);
                 }

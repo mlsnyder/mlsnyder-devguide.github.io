@@ -31,15 +31,40 @@ const traversePostBodyData = (propertyPath, state) => {
         return state;
     }
     const pathArray = propertyPath.split(':');
+    let parent;
+    let param;
 
-    return pathArray.reduce((accum, paramName) => {
+    const val = pathArray.reduce((accum, paramName) => {
         if (paramName.indexOf('[') !== -1) {
             const index = parseInt(paramName.slice(paramName.indexOf('[') + 1, paramName.indexOf(']')), 10);
 
+            if (accum === undefined) {
+                /* eslint-disable no-param-reassign */
+                accum = parent[param] = [];
+                /* eslint-enable no-param-reassign */
+            }
+            parent = accum;
+            param = index;
             return accum[index];
         }
+
+        if (accum === undefined) {
+            /* eslint-disable no-param-reassign */
+            accum = parent[param] = {};
+            /* eslint-enable no-param-reassign */
+        }
+        parent = accum;
+        param = paramName;
         return accum[paramName];
     }, state);
+
+    return (val) ? {
+        val
+    } : {
+        val: parent,
+        param,
+        failed: true
+    };
 };
 
 // Stricter parse float, also doesn't match if a value ends with .0+ (otherwise parseFloat will strip the zero which we want to keep)
@@ -73,13 +98,26 @@ const updateDataAtProperty = (propertyPath, newVal, postBody) => {
         if (nestedParam.indexOf('[') !== -1) {
             const index = parseInt(nestedParam.slice(nestedParam.indexOf('[') + 1, nestedParam.indexOf(']')), 10);
 
+            if (nestedObj[index] === undefined) {
+                nestedObj[index] = [];
+            }
             nestedObj = nestedObj[index];
         } else {
+            if (nestedObj[nestedParam] === undefined) {
+                nestedObj[nestedParam] = {};
+            }
             nestedObj = nestedObj[nestedParam];
         }
     });
 
     nestedObj = newVal;
+};
+
+export {
+    traversePropertyPath,
+    traversePostBodyData,
+    parseFloatStrict,
+    updateDataAtProperty
 };
 
 export default (state, action) => {
@@ -95,12 +133,16 @@ export default (state, action) => {
             newState.curl = buildCurl(newState.sampleAuthHeader, newState);
             newState.apiResponse = undefined;
             break;
+        case actionTypes.SUBMIT_STARTED:
+            newState.apiConsoleLoading = true;
+            break;
         case actionTypes.SUBMIT_DONE:
             newState.consoleError = false;
             newState.apiResponse = action.apiResponse;
             if (action.error) {
                 newState.error = action.error;
             }
+            newState.apiConsoleLoading = false;
             break;
         case actionTypes.FILL_REQUEST_SAMPLE_DATA:
             newState = fillOrRemoveSampleData(newState);

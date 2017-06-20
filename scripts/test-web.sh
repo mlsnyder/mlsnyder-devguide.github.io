@@ -7,11 +7,10 @@ set -e
 jekyllTrap="echo 'Killing jekyll...' && pkill -f jekyll"
 trap "$jekyllTrap" ERR INT
 
-if [[ "$@" == *"--skip-initial-build"* ]]; then
-    bundle exec jekyll serve --detach --skip-initial-build
-else
-    bundle exec jekyll serve --detach
+if [[ "$@" != *"--skip-initial-build"* ]]; then
+    bundle exec jekyll build
 fi
+bundle exec jekyll serve --detach --skip-initial-build
 
 if [[ "$@" != *"--skip-npm-build"* ]]; then
     npm run build
@@ -21,15 +20,10 @@ rm -rf _test/browser/_results
 
 # is we are in CI
 isCI=false
+nightwatchENV=""
 if [[ "$@" == *"--ci-test"* ]]; then
     isCI=true
-fi
-
-# CI specific to point at docker container
-# plus sed command will not run in macOS
-if $isCI ; then
-    find _test/browser -name "*.js" | xargs sed -i 's/localhost:4000/devdot:4000/g'
-    sed -i 's/localhost/selenium/g' _test/browser/nightwatch.json
+    nightwatchENV="-e ci"
 fi
 
 # if we are local, there is no docker container
@@ -48,7 +42,7 @@ if ! $isCI ; then
 fi
 
 # run nightwatch tests
-_test/browser/nightwatch --config _test/browser/nightwatch.json
+_test/browser/nightwatch --config _test/browser/nightwatch.json $nightwatchENV
 
 # since script is ending naturally, traps will not be invoked
 # teardown jekyll and selenium here
@@ -57,8 +51,3 @@ if [[ "$seleniumPID" -ne "" ]]; then
     kill $seleniumPID
 fi
 echo 'Terminating jekyll and selemnium processes...'
-
-if $isCI ; then
-    find _test/browser -name "*.js" | xargs sed -i 's/devdot:4000/localhost:4000/g'
-    sed -i 's/selenium/localhost/g' _test/browser/nightwatch.json
-fi
