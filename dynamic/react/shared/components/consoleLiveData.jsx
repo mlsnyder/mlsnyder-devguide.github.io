@@ -144,7 +144,7 @@ function checkFormatting(onRequestChanged, id) {
     onRequestChanged(id, text.value);
 };
 
-const ConsoleLiveData = ({ action, highlightedInputs, path, request, response, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly}) => {
+const ConsoleLiveData = ({ action, highlightedInputs, path, request, response, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, consoleLoading}) => {
     return (
         <div>
             <h5 className={'console-output-header'}>{'API Endpoint'}</h5>
@@ -170,12 +170,12 @@ const ConsoleLiveData = ({ action, highlightedInputs, path, request, response, o
                         <div className={'json_error'}>
                             <h5>{'Incorrect JSON format'}</h5>
                         </div>: null}
-                                <div className={'code-snippet'}>{endpoint.consoleLoading ? <div className={'loading-pulse'}></div> : <pre dangerouslySetInnerHTML={{__html: response ? syntaxHighlight(response.body) : ' '}} />}</div>
+                                <div className={'code-snippet'}>{consoleLoading ? <div className={'loading-pulse'}></div> : <pre dangerouslySetInnerHTML={{__html: response ? syntaxHighlight(response.body) : ' '}} />}</div>
                     </div>
                 </div> :
                 <div>
                     <h5 className={'console-output-header'}>{'Response'}</h5>
-                            <div className={'code-snippet'}>{endpoint.consoleLoading ? <div className={'loading-pulse'}></div> : <pre dangerouslySetInnerHTML={{__html: response ? syntaxHighlight(response.body) : ' '}} />}</div>
+                            <div className={'code-snippet'}>{consoleLoading ? <div className={'loading-pulse'}></div> : <pre dangerouslySetInnerHTML={{__html: response ? syntaxHighlight(response.body) : ' '}} />}</div>
                     {/* eslint-enable react/no-danger */}
                 </div>
             }
