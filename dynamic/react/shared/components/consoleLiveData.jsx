@@ -39,7 +39,7 @@ const highlightQueryOrPathParams = (requestString, highlightedInputs) => {
 
 const addHighlightPlaceholderToPostBody = (propertyPath, data) => {
     const propNameArray = propertyPath.split(':');
-    const newData = {...data};
+    const newData = { ...data };
     let currDataSlice = newData;
 
     propNameArray.forEach((propName, i) => {
@@ -109,48 +109,36 @@ const syntaxHighlight = (jsonObj, highlightedFields) => {
     });
     return highlightPunctuation(json);
 };
-function checkFormatting(onRequestChanged, id){
-    var text = document.getElementById('console_input');
-    onRequestChanged(id, text.value);
-};
 
-const PostHelper = ({action, endpoint, request, highlightedInputs, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, onRequestChanged}) => {
+const PostHelper = ({ action, endpoint, request, highlightedInputs, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, onRequestChanged }) => {
     if (typeof request === 'object' || Array.isArray(request)) {
         if (action === 'post') {
             return (
                 <div>
-                    <ul className={'nav nav-tabs'}>
-                        <li className={'nav'} id={'FE'}><a href={'#console_input_freeEdit'} data-toggle={'tab'} onClick={() => {onConsoleToggledFreeEdit(endpoint.id);}}>Editor</a></li>
-                        <li className={'nav active'} id={'RO'}><a href={'#console_input_readOnly'} data-toggle={'tab'} onClick={() => {onConsoleToggledReadOnly(endpoint.id);}}>Console</a></li>   
+                    <ul className={'nav nav-tabs'} id={'console-tabs'}>
+                        <li className={'nav'} id={'FE'}><a href={'#console_input_freeEdit'} data-toggle={'tab'} onClick={() => { onConsoleToggledFreeEdit(endpoint.id); }}>Editor</a></li>
+                        <li className={'nav active'} id={'RO'}><a href={'#console_input_readOnly'} data-toggle={'tab'} onClick={() => { onConsoleToggledReadOnly(endpoint.id); }}>Console</a></li>
                     </ul>
                     <div className={'tab-content'}>
-                        <div id={'console_input_readOnly'} className={'code-snippet-tabcontent active'}><pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null)}}/></div>
-                        <div id={'console_input_freeEdit'} className={'code-snippet-tabcontent'}><textarea id={'console_input'} className={'code-snipet-console'} value={endpoint.requestInput} onChange={() => {checkFormatting(endpoint.id, onRequestChanged);}}/></div>                    
+                        <div id={'console_input_readOnly'} className={'code-snippet-tabcontent active'}><pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null) }} /></div>
+                        <div id={'console_input_freeEdit'} className={'code-snippet-tabcontent'}><textarea id={'console_input'} className={'code-snipet-console'} value={endpoint.requestInput} onChange={() => { onRequestChanged(endpoint.id, document.getElementById('console_input').value); }} /></div>
                     </div>
                 </div>
             );
         } else {
             return (
-                <div id={'console_input'} className={'code-snippet'}><pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null)}} /></div>
+                <div id={'console_input'} className={'code-snippet'}><pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null) }} /></div>
             );
         }
     } else {
         return (
-            <div className={'code-snippet code-snippet-code-text'} dangerouslySetInnerHTML={{ __html: highlightQueryOrPathParams(request, highlightedInputs)}} />
+            <div className={'code-snippet code-snippet-code-text'} dangerouslySetInnerHTML={{ __html: highlightQueryOrPathParams(request, highlightedInputs) }} />
         );
     }
 };
 
-<<<<<<< HEAD
-const ConsoleLiveData = ({action, consoleLoading, highlightedInputs, path, request, response, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, onRequestChanged, endpoint}) => {
-=======
-function checkFormatting(onRequestChanged, id) {
-    var text = document.getElementById('console_input');
-    onRequestChanged(id, text.value);
-};
 
-const ConsoleLiveData = ({ action, highlightedInputs, path, request, response, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly}) => {
->>>>>>> parent of 5c41df3... API CONSOLE DONE
+const ConsoleLiveData = ({ action, highlightedInputs, path, request, response, onRequestChanged, endpoint, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, consoleLoading }) => {
     return (
         <div>
             <h5 className={'console-output-header'}>{'API Endpoint'}</h5>
@@ -158,30 +146,30 @@ const ConsoleLiveData = ({ action, highlightedInputs, path, request, response, o
             <h5 className={'console-output-header'}>{'Method'}</h5>
             <div className={'code-snippet-plaintext'}>{action.toUpperCase()}</div>
             {request ?
-                <div className={'row'} style={{marginBottom: '8px'}}>
+                <div className={'row'} style={{ marginBottom: '8px' }}>
                     <div className={'col-md-6 console-req-container'}>
                         <h5 className={'console-output-header'}>{'Request'}</h5>
                         {/* eslint-disable react/no-danger */}
-                        <PostHelper action={action} 
-                                    request={request} 
-                                    highlightedInputs={highlightedInputs} 
-                                    onConsoleToggledFreeEdit={onConsoleToggledFreeEdit}
-                                    onConsoleToggledReadOnly={onConsoleToggledReadOnly} 
-                                    onRequestChanged={onRequestChanged} 
-                                    endpoint = {endpoint}/>
+                        <PostHelper action={action}
+                            request={request}
+                            highlightedInputs={highlightedInputs}
+                            onConsoleToggledFreeEdit={onConsoleToggledFreeEdit}
+                            onConsoleToggledReadOnly={onConsoleToggledReadOnly}
+                            onRequestChanged={onRequestChanged}
+                            endpoint={endpoint} />
                     </div>
                     <div className={'col-md-6 console-res-container'}>
                         <h5 className={'console-output-header'}>{'Response'}</h5>
-                        {endpoint.consoleError ? 
-                        <div className={'json_error'}>
-                            <h5>{'Incorrect JSON format'}</h5>
-                        </div>: null}
-                                <div className={'code-snippet'}>{endpoint.consoleLoading ? <div className={'loading-pulse'}></div> : <pre dangerouslySetInnerHTML={{__html: response ? syntaxHighlight(response.body) : ' '}} />}</div>
+                        {endpoint.consoleError ?
+                            <div className={'json_error'}>
+                                <h5>{'Incorrect JSON format'}</h5>
+                            </div> : null}
+                        <div className={'code-snippet'}>{consoleLoading ? <div className={'loading-pulse'}></div> : <pre dangerouslySetInnerHTML={{ __html: response ? syntaxHighlight(response.body) : ' ' }} />}</div>
                     </div>
                 </div> :
                 <div>
                     <h5 className={'console-output-header'}>{'Response'}</h5>
-                            <div className={'code-snippet'}>{endpoint.consoleLoading ? <div className={'loading-pulse'}></div> : <pre dangerouslySetInnerHTML={{__html: response ? syntaxHighlight(response.body) : ' '}} />}</div>
+                    <div className={'code-snippet'}>{consoleLoading ? <div className={'loading-pulse'}></div> : <pre dangerouslySetInnerHTML={{ __html: response ? syntaxHighlight(response.body) : ' ' }} />}</div>
                     {/* eslint-enable react/no-danger */}
                 </div>
             }

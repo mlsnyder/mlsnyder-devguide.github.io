@@ -72,6 +72,15 @@ const mapDispatchToProps = (dispatch) => {
         onPostBodyInputChanged: (endpointId, paramName, newValue) => {
             dispatch(actions.postBodyInputChanged(endpointId, paramName, newValue));
         },
+        onRequestChanged: (endpointId, newValue) => {
+            dispatch(actions.requestChanged(endpointId, newValue));
+        },
+        onConsoleToggledReadOnly: (endpointId) => {
+            dispatch(actions.consoleToggledReadOnly(endpointId));
+        },
+        onConsoleToggledFreeEdit: (endpointId) => {
+            dispatch(actions.consoleToggledFreeEdit(endpointId));
+        },
         onResetConsole: (endpointId) => {
             dispatch(actions.resetConsole(endpointId));
         },

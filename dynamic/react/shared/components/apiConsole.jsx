@@ -30,7 +30,7 @@ const ApiConsole = (props) => {
                     onRequestChanged={props.onRequestChanged}
                     path={props.endpoint.path}
                     request={getRequest(props.endpoint)}
-                    response={props.endpoint.apiResponse}/>
+                    response={props.endpoint.apiResponse} />
             </div>
         </div>
     );
@@ -83,7 +83,7 @@ ApiConsole.propTypes = {
     onRequestChanged: PropTypes.func.isRequired,
     onResetConsole: PropTypes.func.isRequired,
     onSubmitConsoleRequest: PropTypes.func.isRequired,
-    onToggleShowExcludedPostBodyProps: PropTypes.func.isRequired   
+    onToggleShowExcludedPostBodyProps: PropTypes.func.isRequired
 };
 
 export default ApiConsole;

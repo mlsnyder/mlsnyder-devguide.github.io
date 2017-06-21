@@ -167,6 +167,42 @@ h5.console-output-header {
     margin-left: 10px;
 }
 
+.nav-tabs {
+    &#console-tabs {
+        border-bottom: 0px;
+        margin-right: 10px;
+        >li {
+            float: right; // Make the list-items overlay the bottom border
+            margin-bottom: -1px; // Actual tabs (as links)
+            font-size: 15px;
+            >a {
+                margin-right: 1px;
+                line-height: 5px; //;$line-height-base;
+                border: 1px solid transparent;
+                border-radius: $border-radius-base $border-radius-base 0 0;
+                &:hover {
+                    border-color: $nav-tabs-link-hover-border-color $nav-tabs-link-hover-border-color $nav-tabs-border-color;
+                }
+            } // Active state, and its :hover to override normal :hover
+            &.active>a {
+                &,
+                &:hover,
+                &:focus {
+                    color: $nav-tabs-active-link-hover-color;
+                    background-color: #71e4ff;
+                    border: 1px solid #71e4ff;
+                    border-bottom-color: transparent;
+                    cursor: default;
+                }
+            }
+        } // pulling this in mainly for less shorthand
+        &.nav-justified {
+            @extend .nav-justified;
+            @extend .nav-tabs-justified;
+        }
+    }
+}
+
 .json_error {
     font-weight: bold;
     margin-left: 10px;
