@@ -25736,7 +25736,7 @@ describe('Shared Reducers', () => {
 
                 expectedState.consoleViewFreeEdit = true;
                 /* eslint-disable space-infix-ops */
-                expectedState.requestInput='{"date": "2016-01-01T00:00:00.000Z", "incoterms": "DAP", "source": {"country": "US"}, "destination": {"country": "CA", "region": "CA-BC"}, "entityType": "B2C", "currency": "USD", "shipping": {"cost": 50, "insurance": 50, "mode": "ground", "express": true}, "items": [{"id": "1", "hsCode": "930700", "description": "Swords", "price": 100, "quantity": 10, "units": [{"name": "kg", "amount": 10, "total": 10}]}]}';
+                expectedState.requestInput="{\n  \"date\": \"2016-01-01T00:00:00.000Z\",\n  \"incoterms\": \"DAP\",\n  \"source\": {\n    \"country\": \"US\"\n  },\n  \"destination\": {\n    \"country\": \"CA\",\n    \"region\": \"CA-BC\"\n  },\n  \"entityType\": \"B2C\",\n  \"currency\": \"USD\",\n  \"shipping\": {\n    \"cost\": 50,\n    \"insurance\": 50,\n    \"mode\": \"ground\",\n    \"express\": true\n  },\n  \"items\": [\n    {\n      \"id\": \"1\",\n      \"hsCode\": \"930700\",\n      \"description\": \"Swords\",\n      \"price\": 100,\n      \"quantity\": 10,\n      \"units\": [\n        {\n          \"name\": \"kg\",\n          \"amount\": 10,\n          \"total\": 10\n        }\n      ]\n    }\n  ]\n}";
                 /* eslint-enable space-infix-ops */
                 /* eslint-enable quote-props */
                 /* eslint-enable quotes */
