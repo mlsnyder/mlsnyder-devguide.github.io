@@ -3,10 +3,6 @@ import actionTypes from '../../shared/actionTypes';
 
 export default (state = {}, action) => {
     switch (action.type) {
-    case actionTypes.APP_LOADED:
-        return {...state,
-            appLoaded: true
-        };
     case actionTypes.AUTH_KEY_CHANGED:
             // Update auth header for each request in pmCollection:
         const params = {...state.auth.params,
@@ -37,9 +33,12 @@ export default (state = {}, action) => {
                 }
             };
         });
-        return {...state,
-            auth: auth
-        };
+        return {...state, auth: auth};
+
+    case actionTypes.USER_PROFILE_FETCHED:
+        const userProfile = action.user || null;
+
+        return {...state, userProfile};
     case actionTypes.RESET_CONSOLE:
     case actionTypes.SUBMIT_DONE:
     case actionTypes.SUBMIT_STARTED:

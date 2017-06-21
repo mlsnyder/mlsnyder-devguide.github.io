@@ -54,6 +54,6 @@
     "whatwg-fetch": "^1.0.0"
   },
   "dependencies": {
-    "draft-js": "^0.10.1"
+    "oidc-client": "^1.3.0"
   }
 }
