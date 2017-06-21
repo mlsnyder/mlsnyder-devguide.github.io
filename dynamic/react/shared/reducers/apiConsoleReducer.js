@@ -201,6 +201,9 @@ switch (action.type) {
         newState.apiResponse = undefined;
         break;
     case actionTypes.ADD_ITEM_TO_POST_BODY_COLLECTION:
+        // Re-initialize all bootstrap tooltips
+        // Re-render isn't instant, so call on a delay.
+        setTimeout(() => $('.console-tool-tip').tooltip(), 1000);
         const newArrObj = buildInitialPostBodyData(action.itemSchema, newState.showExcludedPostBodyFields);
 
         traversePostBodyData(action.postBodyParamName, newState.postBody).push(newArrObj);
@@ -215,6 +218,9 @@ switch (action.type) {
 
         break;
     case actionTypes.TOGGLE_SHOW_EXCLUDED_POST_BODY_PROPS:
+        // Re-initialize all bootstrap tooltips
+        // Re-render isn't instant, so call on a delay.
+        setTimeout(() => $('.console-tool-tip').tooltip(), 1000);
         newState.showExcludedPostBodyFields = !newState.showExcludedPostBodyFields;
         newState.postBody = buildInitialPostBodyData(newState.requestSchema, newState.showExcludedPostBodyFields);
         break;
