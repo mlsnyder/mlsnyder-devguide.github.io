@@ -121,63 +121,62 @@ export {
 };
 
 export default (state, action) => {
-    let newState = {...state
+    let newState = { ...state
 
     };
-switch (action.type) {
-    case actionTypes.RESET_CONSOLE:
-        if (newState.consoleViewFreeEdit) {
+    switch (action.type) {
+        case actionTypes.RESET_CONSOLE:
+            if (newState.consoleViewFreeEdit) {
                 newState.requestInput = "{}";
-        }
-        newState = fillOrRemoveSampleData(newState, true);
-        newState.qsPath = buildQueryString(reduceParamsToKeyValuePair(newState.queryString));
-        newState.curl = buildCurl(newState.sampleAuthHeader, newState);
-        newState.apiResponse = undefined;
-        break;
-    case actionTypes.SUBMIT_STARTED:
-        newState.apiConsoleLoading = true;
-        break;
-    case actionTypes.SUBMIT_DONE:
-        newState.consoleError = false;
-        newState.apiResponse = action.apiResponse;
-        if (action.error) {
-            newState.error = action.error;
-        }
-        newState.apiConsoleLoading = false;
-        break;
-    case actionTypes.FILL_REQUEST_SAMPLE_DATA:
-        newState = fillOrRemoveSampleData(newState);
-        newState.qsPath = buildQueryString(reduceParamsToKeyValuePair(newState.queryString));
-        newState.curl = buildCurl(newState.sampleAuthHeader, newState);
-        newState.requestInput = JSON.stringify(newState.postBody);
-        newState.consoleError = false;
-        break;
-    case actionTypes.QUERY_STRING_CHANGED:
-        newState = { ...newState,
-            queryString: queryStringReducer(newState.queryString, action)
-        };
-        newState.qsPath = buildQueryString(reduceParamsToKeyValuePair(newState.queryString));
-        newState.curl = buildCurl(newState.sampleAuthHeader, newState);
-        break;
-    case actionTypes.PATH_PARAM_CHANGED:
-        newState.pathParams[action.paramName].value = action.newValue;
-        newState.curl = buildCurl(newState.sampleAuthHeader, newState);
-        break;
-    case actionTypes.POST_BODY_CHANGED:
-        // If any changed PostBodyForm input was an array item, need to access its `items`
-        // schema to determine its fieldType. With that in hand, we can directly update it at its index in our postBody
-        const accessorName = action.postBodyParamName.replace(/\[\d+\]/g, 'items');
-        const newStateProperty = traversePropertyPath(accessorName, newState.requestSchema);
-        let castedValue;
-        if (action.newValue === '') {
-            castedValue = undefined;
-        } else {
-            castedValue = newStateProperty.fieldType === 'number' ? (parseFloatStrict(action.newValue) || action.newValue) : action.newValue;
-        }
-        updateDataAtProperty(action.postBodyParamName, castedValue, newState.postBody);
-        break;
-    case actionTypes.REQUEST_CHANGED:
-        if (newState.consoleViewFreeEdit) {
+            }
+            newState = fillOrRemoveSampleData(newState, true);
+            newState.qsPath = buildQueryString(reduceParamsToKeyValuePair(newState.queryString));
+            newState.curl = buildCurl(newState.sampleAuthHeader, newState);
+            newState.apiResponse = undefined;
+            break;
+        case actionTypes.SUBMIT_STARTED:
+            newState.apiConsoleLoading = true;
+            break;
+        case actionTypes.SUBMIT_DONE:
+            newState.consoleError = false;
+            newState.apiResponse = action.apiResponse;
+            if (action.error) {
+                newState.error = action.error;
+            }
+            newState.apiConsoleLoading = false;
+            break;
+        case actionTypes.FILL_REQUEST_SAMPLE_DATA:
+            newState = fillOrRemoveSampleData(newState);
+            newState.qsPath = buildQueryString(reduceParamsToKeyValuePair(newState.queryString));
+            newState.curl = buildCurl(newState.sampleAuthHeader, newState);
+            newState.requestInput = JSON.stringify(newState.postBody);
+            newState.consoleError = false;
+            break;
+        case actionTypes.QUERY_STRING_CHANGED:
+            newState = { ...newState,
+                queryString: queryStringReducer(newState.queryString, action)
+            };
+            newState.qsPath = buildQueryString(reduceParamsToKeyValuePair(newState.queryString));
+            newState.curl = buildCurl(newState.sampleAuthHeader, newState);
+            break;
+        case actionTypes.PATH_PARAM_CHANGED:
+            newState.pathParams[action.paramName].value = action.newValue;
+            newState.curl = buildCurl(newState.sampleAuthHeader, newState);
+            break;
+        case actionTypes.POST_BODY_CHANGED:
+            // If any changed PostBodyForm input was an array item, need to access its `items`
+            // schema to determine its fieldType. With that in hand, we can directly update it at its index in our postBody
+            const accessorName = action.postBodyParamName.replace(/\[\d+\]/g, 'items');
+            const newStateProperty = traversePropertyPath(accessorName, newState.requestSchema);
+            let castedValue;
+            if (action.newValue === '') {
+                castedValue = undefined;
+            } else {
+                castedValue = newStateProperty.fieldType === 'number' ? (parseFloatStrict(action.newValue) || action.newValue) : action.newValue;
+            }
+            updateDataAtProperty(action.postBodyParamName, castedValue, newState.postBody);
+            break;
+        case actionTypes.REQUEST_CHANGED:
             newState.requestInput = action.newValue;
             try {
                 var postBody = JSON.parse(action.newValue);
@@ -186,45 +185,54 @@ switch (action.type) {
             } catch (e) {
                 newState.consoleError = true;
             }
-        }
-        break;
-    case actionTypes.CONSOLE_TOGGLED_READ_ONLY:
-        newState.consoleViewFreeEdit = false;
-        newState.consoleError = false;
-        break;
-    case actionTypes.CONSOLE_TOGGLED_FREE_EDIT:
-        newState.consoleViewFreeEdit = true;
-        newState.requestInput = JSON.stringify(newState.postBody, null, 2);
-        break;
-    case actionTypes.CONSOLE_ERROR:
-        newState.consoleError = true;
-        newState.apiResponse = undefined;
-        break;
-    case actionTypes.ADD_ITEM_TO_POST_BODY_COLLECTION:
-        // Re-initialize all bootstrap tooltips
-        // Re-render isn't instant, so call on a delay.
-        setTimeout(() => $('.console-tool-tip').tooltip(), 1000);
-        const newArrObj = buildInitialPostBodyData(action.itemSchema, newState.showExcludedPostBodyFields);
+            break;
+        case actionTypes.CONSOLE_TOGGLED_READ_ONLY:
+            newState.consoleViewFreeEdit = false;
+            newState.consoleError = false;
+            break;
+        case actionTypes.CONSOLE_TOGGLED_FREE_EDIT:
+            newState.consoleViewFreeEdit = true;
+            newState.requestInput = JSON.stringify(newState.postBody, null, 2);
+            break;
+        case actionTypes.CONSOLE_ERROR:
+            newState.consoleError = true;
+            newState.apiResponse = undefined;
+            break;
+        case actionTypes.ADD_ITEM_TO_POST_BODY_COLLECTION:
+            // Re-initialize all bootstrap tooltips
+            // Re-render isn't instant, so call on a delay.
+            setTimeout(() => $('.console-tool-tip').tooltip(), 1000);
+            const newArrObj = buildInitialPostBodyData(action.itemSchema, newState.showExcludedPostBodyFields);
+            const {
+                val,
+                param,
+                failed
+            } = traversePostBodyData(action.postBodyParamName, newState.postBody);
 
-        traversePostBodyData(action.postBodyParamName, newState.postBody).push(newArrObj);
-        break;
-    case actionTypes.REMOVE_ITEM_FROM_POST_BODY_COLLECTION:
-        const itemToRemove = action.postBodyParamName.substr(0, action.postBodyParamName.lastIndexOf(':'));
-        const indexToRemove = parseInt(action.postBodyParamName.substr(action.postBodyParamName.lastIndexOf(':')).replace(/\D/g, ''), 10);
-        const newStatePropertyToRemove = traversePostBodyData(itemToRemove, newState.postBody);
+            if (failed) {
+                val[param] = [];
+                val[param].push(newArrObj);
+            } else {
+                val.push(newArrObj);
+            }
+            break;
+        case actionTypes.REMOVE_ITEM_FROM_POST_BODY_COLLECTION:
+            const itemToRemove = action.postBodyParamName.substr(0, action.postBodyParamName.lastIndexOf(':'));
+            const indexToRemove = parseInt(action.postBodyParamName.substr(action.postBodyParamName.lastIndexOf(':')).replace(/\D/g, ''), 10);
+            const newStatePropertyToRemove = traversePostBodyData(itemToRemove, newState.postBody).val;
 
-        newStatePropertyToRemove.splice(indexToRemove, 1);
-        newState.curl = buildCurl(newState.sampleAuthHeader, newState);
+            newStatePropertyToRemove.splice(indexToRemove, 1);
+            newState.curl = buildCurl(newState.sampleAuthHeader, newState);
 
-        break;
-    case actionTypes.TOGGLE_SHOW_EXCLUDED_POST_BODY_PROPS:
-        // Re-initialize all bootstrap tooltips
-        // Re-render isn't instant, so call on a delay.
-        setTimeout(() => $('.console-tool-tip').tooltip(), 1000);
-        newState.showExcludedPostBodyFields = !newState.showExcludedPostBodyFields;
-        newState.postBody = buildInitialPostBodyData(newState.requestSchema, newState.showExcludedPostBodyFields);
-        break;
-    default:
+            break;
+        case actionTypes.TOGGLE_SHOW_EXCLUDED_POST_BODY_PROPS:
+            // Re-initialize all bootstrap tooltips
+            // Re-render isn't instant, so call on a delay.
+            setTimeout(() => $('.console-tool-tip').tooltip(), 1000);
+            newState.showExcludedPostBodyFields = !newState.showExcludedPostBodyFields;
+            newState.postBody = buildInitialPostBodyData(newState.requestSchema, newState.showExcludedPostBodyFields);
+            break;
+        default:
     }
 
 

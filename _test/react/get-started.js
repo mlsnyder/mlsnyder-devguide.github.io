@@ -1,6 +1,8 @@
 /* eslint-env mocha */
 
-import {expect} from 'chai';
+import {
+    expect
+} from 'chai';
 import R from 'ramda';
 
 import actionTypes from '../../dynamic/react/shared/actionTypes';
@@ -9,8 +11,7 @@ import reducer from '../../dynamic/react/get-started/reducers/reducer';
 describe('getStarted Reducer', () => {
     /* eslint-disable quotes */
     /* eslint-disable quote-props */
-    const state = [
-        {
+    const state = [{
             "operationId": "getTax",
             "name": "Calculate Tax",
             "description": "Calculates taxes on a document such as a sales order, sales invoice, purchase order, purchase invoice, or credit memo. To use an XML request/response, use the URL `/1.0/tax/get.xml`",
@@ -132,12 +133,8 @@ describe('getStarted Reducer', () => {
                 }
             },
             "postBody": {
-                "Addresses": [
-                    {}
-                ],
-                "Lines": [
-                    {}
-                ]
+                "Addresses": [{}],
+                "Lines": [{}]
             },
             "curl": "curl\n    -X POST\n    -H 'Accept: application/json'\n    -H 'Authorization: Basic aHR0cHdhdGNoOmY='\n    -H 'Content-Type: application/json'\n    --data '{\n  \"Addresses\": [\n    {}\n  ],\n  \"Lines\": [\n    {}\n  ]\n}'\n    https://development.avalara.net/1.0/tax/get",
             "responseSchema": {
@@ -645,7 +642,9 @@ describe('getStarted Reducer', () => {
 
     describe('Default', () => {
         it('Returns default state', () => {
-            expect(reducer({}, {type: 'unknown'})).to.eql({});
+            expect(reducer({}, {
+                type: 'unknown'
+            })).to.eql({});
         });
     });
     describe('RESET_CONSOLE', () => {
@@ -658,31 +657,30 @@ describe('getStarted Reducer', () => {
             expectedState[0].curl = "curl\n    -X POST\n    -H 'Accept: application/json'\n    -H 'Authorization: Basic aHR0cHdhdGNoOmY='\n    -H 'Content-Type: application/json'\n    --data '{\n  \"Addresses\": [\n    {}\n  ],\n  \"Lines\": [\n    {}\n  ]\n}'\n    https://development.avalara.net/1.0/tax/get";
             expectedState[0].qsPath = '';
             expectedState[0].postBody = {
-                "Addresses": [
-                    {
-                        "AddressCode": undefined,
-                        "City": undefined,
-                        "Country": undefined,
-                        "Line1": undefined,
-                        "PostalCode": undefined,
-                        "Region": undefined
-                    }
-                ],
-                "Lines": [
-                    {
-                        "Amount": undefined,
-                        "DestinationCode": undefined,
-                        "LineNo": undefined,
-                        "OriginCode": undefined,
-                        "Qty": undefined
-                    }
-                ],
+                "Addresses": [{
+                    "AddressCode": undefined,
+                    "City": undefined,
+                    "Country": undefined,
+                    "Line1": undefined,
+                    "PostalCode": undefined,
+                    "Region": undefined
+                }],
+                "Lines": [{
+                    "Amount": undefined,
+                    "DestinationCode": undefined,
+                    "LineNo": undefined,
+                    "OriginCode": undefined,
+                    "Qty": undefined
+                }],
                 "CustomerCode": undefined
             };
             /* eslint-enable quote-props */
             /* eslint-enable quotes */
 
-            expect(reducer(state, {type: actionTypes.RESET_CONSOLE, endpointId: 0})).to.eql(expectedState);
+            expect(reducer(state, {
+                type: actionTypes.RESET_CONSOLE,
+                endpointId: 0
+            })).to.eql(expectedState);
         });
     });
     describe('SUBMIT_DONE', () => {
@@ -704,6 +702,7 @@ describe('getStarted Reducer', () => {
 
         expectedState[0].apiResponse = apiResponse;
         expectedState[0].apiConsoleLoading = false;
+        expectedState[0].consoleError = false;
 
         it('returns expected state for apiResponse', () => {
             expect(reducer(state, action)).to.eql(expectedState);
@@ -726,30 +725,31 @@ describe('getStarted Reducer', () => {
             expectedState[0].qsPath = '';
             expectedState[0].postBody = {
                 "CustomerCode": "ABC4335",
-                "Addresses": [
-                    {
-                        "AddressCode": "01",
-                        "Line1": "45 Fremont Street",
-                        "City": "Chicago",
-                        "Region": "IL",
-                        "Country": "US",
-                        "PostalCode": "60602"
-                    }
-                ],
-                "Lines": [
-                    {
-                        "Amount": "10",
-                        "DestinationCode": "01",
-                        "LineNo": "1",
-                        "OriginCode": "02",
-                        "Qty": "1"
-                    }
-                ]
+                "Addresses": [{
+                    "AddressCode": "01",
+                    "Line1": "45 Fremont Street",
+                    "City": "Chicago",
+                    "Region": "IL",
+                    "Country": "US",
+                    "PostalCode": "60602"
+                }],
+                "Lines": [{
+                    "Amount": "10",
+                    "DestinationCode": "01",
+                    "LineNo": "1",
+                    "OriginCode": "02",
+                    "Qty": "1"
+                }]
             };
+            expectedState[0].consoleError = false;
+            expectedState[0].requestInput = "{\"CustomerCode\":\"ABC4335\",\"Addresses\":[{\"AddressCode\":\"01\",\"Line1\":\"45 Fremont Street\",\"City\":\"Chicago\",\"Region\":\"IL\",\"Country\":\"US\",\"PostalCode\":\"60602\"}],\"Lines\":[{\"LineNo\":\"1\",\"DestinationCode\":\"01\",\"OriginCode\":\"02\",\"Qty\":\"1\",\"Amount\":\"10\"}]}";
             /* eslint-enable quote-props */
             /* eslint-enable quotes */
 
-            expect(reducer(state, {type: actionTypes.FILL_REQUEST_SAMPLE_DATA, endpointId: 0})).to.eql(expectedState);
+            expect(reducer(state, {
+                type: actionTypes.FILL_REQUEST_SAMPLE_DATA,
+                endpointId: 0
+            })).to.eql(expectedState);
         });
     });
     describe('QUERY_STRING_CHANGED', () => {
@@ -770,13 +770,17 @@ describe('getStarted Reducer', () => {
             /* eslint-enable quote-props */
             /* eslint-enable quotes */
 
-            expect(reducer(state, {type: actionTypes.QUERY_STRING_CHANGED, newValue: '1', paramName: 'Line1', endpointId: 1})).to.eql(expectedState);
+            expect(reducer(state, {
+                type: actionTypes.QUERY_STRING_CHANGED,
+                newValue: '1',
+                paramName: 'Line1',
+                endpointId: 1
+            })).to.eql(expectedState);
         });
         it('multiple query param: returns expected state', () => {
             /* eslint-disable quotes */
             /* eslint-disable quote-props */
-            const qsState = [
-                {
+            const qsState = [{
                     "operationId": "getTax",
                     "name": "Calculate Tax",
                     "description": "Calculates taxes on a document such as a sales order, sales invoice, purchase order, purchase invoice, or credit memo. To use an XML request/response, use the URL `/1.0/tax/get.xml`",
@@ -898,12 +902,8 @@ describe('getStarted Reducer', () => {
                         }
                     },
                     "postBody": {
-                        "Addresses": [
-                            {}
-                        ],
-                        "Lines": [
-                            {}
-                        ]
+                        "Addresses": [{}],
+                        "Lines": [{}]
                     },
                     "curl": "curl -X POST \"https://development.avalara.net/1.0/tax/get\" -H \"Accept: application/json\" -H \"Authorization: Basic aHR0cHdhdGNoOmY=\" -H \"Content-Type: application/json\" --data '{\"Addresses\":[{}],\"Lines\":[{}]}'",
                     "responseSchema": {
@@ -1420,7 +1420,12 @@ describe('getStarted Reducer', () => {
             /* eslint-enable quote-props */
             /* eslint-enable quotes */
 
-            expect(reducer(qsState, {type: actionTypes.QUERY_STRING_CHANGED, newValue: '1', paramName: 'Line1', endpointId: 1})).to.eql(expectedState);
+            expect(reducer(qsState, {
+                type: actionTypes.QUERY_STRING_CHANGED,
+                newValue: '1',
+                paramName: 'Line1',
+                endpointId: 1
+            })).to.eql(expectedState);
         });
     });
     describe('POST_BODY_CHANGED', () => {
@@ -1434,7 +1439,12 @@ describe('getStarted Reducer', () => {
             /* eslint-enable quote-props */
             /* eslint-enable quotes */
 
-            expect(reducer(state, {type: actionTypes.POST_BODY_CHANGED, newValue: 'GB', postBodyParamName: 'Addresses:[0]:AddressCode', endpointId: 0})).to.eql(expectedState);
+            expect(reducer(state, {
+                type: actionTypes.POST_BODY_CHANGED,
+                newValue: 'GB',
+                postBodyParamName: 'Addresses:[0]:AddressCode',
+                endpointId: 0
+            })).to.eql(expectedState);
         });
         it('returns expected state when setting a new value to empty string', () => {
             /* eslint-disable quotes */
@@ -1446,7 +1456,12 @@ describe('getStarted Reducer', () => {
             /* eslint-enable quote-props */
             /* eslint-enable quotes */
 
-            expect(reducer(state, {type: actionTypes.POST_BODY_CHANGED, newValue: '', postBodyParamName: 'Addresses:[0]:AddressCode', endpointId: 0})).to.eql(expectedState);
+            expect(reducer(state, {
+                type: actionTypes.POST_BODY_CHANGED,
+                newValue: '',
+                postBodyParamName: 'Addresses:[0]:AddressCode',
+                endpointId: 0
+            })).to.eql(expectedState);
         });
         it('returns expected state when setting a new value to numeric', () => {
             /* eslint-disable quotes */
@@ -1458,7 +1473,77 @@ describe('getStarted Reducer', () => {
             /* eslint-enable quote-props */
             /* eslint-enable quotes */
 
-            expect(reducer(state, {type: actionTypes.POST_BODY_CHANGED, newValue: '5', postBodyParamName: 'Lines:[0]:Qty', endpointId: 0})).to.eql(expectedState);
+            expect(reducer(state, {
+                type: actionTypes.POST_BODY_CHANGED,
+                newValue: '5',
+                postBodyParamName: 'Lines:[0]:Qty',
+                endpointId: 0
+            })).to.eql(expectedState);
+        });
+    });
+    describe('REQUEST_CHANGED', () => {
+        it('returns expected state when setting a new value that cannot be JSON parsed', () => {
+            const expectedState = R.clone(state);
+            expectedState[1].consoleError = true;
+            expectedState[1].requestInput = "{test";
+
+            expect(reducer(state, {
+                type: actionTypes.REQUEST_CHANGED,
+                endpointId: 1,
+                newValue: "{test"
+            })).to.eql(expectedState);
+        });
+
+        it('returns expected state when setting a new calue that can be JSON parsed', () => {
+            const expectedState = R.clone(state);
+            expectedState[1].consoleError = false;
+            expectedState[1].postBody = {};
+            expectedState[1].requestInput = "{}";
+
+            expect(reducer(state, {
+                type: actionTypes.REQUEST_CHANGED,
+                endpointId: 1,
+                newValue: "{}"
+            })).to.eql(expectedState);
+        });
+    });
+    describe('CONSOLE_TOGGLED_READ_ONLY', () => {
+        it('returns expected state', () => {
+            const expectedState = R.clone(state);
+            expectedState[1].consoleViewFreeEdit = false;
+            expectedState[1].consoleError = false;
+
+            expect(reducer(state, {
+                type: actionTypes.CONSOLE_TOGGLED_READ_ONLY,
+                endpointId: 1
+            })).to.eql(expectedState);
+
+        });
+    });
+    describe('CONSOLE_TOGGLED_FREE_EDIT', () => {
+        it('returns expected state', () => {
+            const expectedState = R.clone(state);
+            expectedState[1].consoleViewFreeEdit = true;
+            expectedState[1].requestInput = undefined;
+
+            expect(reducer(state, {
+                type: actionTypes.CONSOLE_TOGGLED_FREE_EDIT,
+                endpointId: 1
+            })).to.eql(expectedState);
+
+        });
+    });
+    describe('CONSOLE_ERROR', () => {
+        it('returns expected state', () => {
+            const expectedState = R.clone(state);
+            expectedState[1].consoleError = true;
+            expectedState[1].apiResponse = undefined;
+
+            expect(reducer(state, {
+                type: actionTypes.CONSOLE_ERROR,
+                endpointId: 1
+            })).to.eql(expectedState);
+
         });
     });
     describe('ADD_ITEM_TO_POST_BODY_COLLECTION', () => {
@@ -1468,8 +1553,9 @@ describe('getStarted Reducer', () => {
             const expectedStateWithAddedItemUnit = R.clone(state);
 
             expectedStateWithAddedItemUnit[0].postBody = Object.assign(expectedStateWithAddedItemUnit[0].postBody, {
-                Lines: [
-                    {Qty: 5},
+                Lines: [{
+                        Qty: 5
+                    },
                     {
                         Amount: undefined,
                         DestinationCode: undefined,
@@ -1534,19 +1620,21 @@ describe('getStarted Reducer', () => {
             /* eslint-disable quote-props */
             const expectedStateWithoutAddedItemUnit = R.clone(state);
 
-            expectedStateWithoutAddedItemUnit[0].postBody.Lines = [
-                {
-                    Amount: undefined,
-                    DestinationCode: undefined,
-                    LineNo: undefined,
-                    OriginCode: undefined,
-                    Qty: undefined
-                }
-            ];
+            expectedStateWithoutAddedItemUnit[0].postBody.Lines = [{
+                Amount: undefined,
+                DestinationCode: undefined,
+                LineNo: undefined,
+                OriginCode: undefined,
+                Qty: undefined
+            }];
             /* eslint-enable quote-props */
             /* eslint-enable quotes */
 
-            expect(reducer(state, {type: actionTypes.REMOVE_ITEM_FROM_POST_BODY_COLLECTION, postBodyParamName: 'Lines:[0]', endpointId: 0})).to.eql(expectedStateWithoutAddedItemUnit);
+            expect(reducer(state, {
+                type: actionTypes.REMOVE_ITEM_FROM_POST_BODY_COLLECTION,
+                postBodyParamName: 'Lines:[0]',
+                endpointId: 0
+            })).to.eql(expectedStateWithoutAddedItemUnit);
         });
     });
 });

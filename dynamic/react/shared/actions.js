@@ -43,14 +43,6 @@ export default {
         };
     },
     requestChanged: (endpointId, newValue) => {
-        console.log("we are in the request action");
-        return {
-            type: actionTypes.REQUEST_CHANGED,
-            endpointId: endpointId,
-            newValue: newValue
-        };
-    },
-    temp: (endpointId, newValue) => {
         return {
             type: actionTypes.REQUEST_CHANGED,
             endpointId: endpointId,
