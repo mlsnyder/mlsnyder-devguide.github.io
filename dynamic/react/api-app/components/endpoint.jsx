@@ -8,7 +8,7 @@ import ExpanderIcon from './expanderIcon';
 const replaceSpaces = (str) => str.replace(/\s/g, '');
 
 // Give our endpoint an id based on its name for our clientside routing in jekyll
-const EndPointComponent = ({ endpoint, apiType, onFillConsoleSampleData, onSubmitConsoleRequest, onPostBodyInputChanged, onResetConsole, onQueryParamChanged, onPathParamChanged, onAddItemToPostbodyCollection, onRemovePostbodyCollectionItem, onToggleShowExcludedPostBodyProps, onRequestChanged, onConsoleToggledFreeEdit, onConsoleToggledReadOnly }) => (
+const EndPointComponent = ({endpoint, apiType, onFillConsoleSampleData, onSubmitConsoleRequest, onPostBodyInputChanged, onResetConsole, onQueryParamChanged, onPathParamChanged, onAddItemToPostbodyCollection, onRemovePostbodyCollectionItem, onToggleShowExcludedPostBodyProps, onRequestChanged, onConsoleToggledFreeEdit, onConsoleToggledReadOnly}) => (
     <div className={'endpoint-summary'}>
         <ApiDocumentation endpoint={endpoint} />
         <br />
@@ -20,10 +20,10 @@ const EndPointComponent = ({ endpoint, apiType, onFillConsoleSampleData, onSubmi
                         $('.console-tool-tip').tooltip();
                     }
                 }>
-                    <div className={'documentation-expand-icon'} id={`${replaceSpaces(endpoint.operationId)}-console-icon`} style={{ display: 'inline-block', marginRight: '5px' }}>
+                    <div className={'documentation-expand-icon'} id={`${replaceSpaces(endpoint.operationId)}-console-icon`} style={{display: 'inline-block', marginRight: '5px'}}>
                         <ExpanderIcon startPosition={'DOWN'} />
                     </div>
-                    <h5 className={'clickable'} style={{ display: 'inline-block' }}>{'Try ' + endpoint.name + ' now!'}</h5>
+                    <h5 className={'clickable'} style={{display: 'inline-block'}}>{'Try ' + endpoint.name + ' now!'}</h5>
                 </div>
                 <div className={'collapse'} id={`${replaceSpaces(endpoint.operationId)}-console-body`}>
                     <ApiConsole endpoint={endpoint} onAddItemToPostbodyCollection={onAddItemToPostbodyCollection} onConsoleToggledFreeEdit={onConsoleToggledFreeEdit} onConsoleToggledReadOnly={onConsoleToggledReadOnly} onFillConsoleSampleData={onFillConsoleSampleData} onPathParamChanged={onPathParamChanged} onPostBodyInputChanged={onPostBodyInputChanged} onQueryParamChanged={onQueryParamChanged} onRemovePostbodyCollectionItem={onRemovePostbodyCollectionItem} onRequestChanged={onRequestChanged} onResetConsole={onResetConsole} onSubmitConsoleRequest={onSubmitConsoleRequest} onToggleShowExcludedPostBodyProps={onToggleShowExcludedPostBodyProps} showExcludedPostBodyFields={endpoint.showExcludedPostBodyFields} />

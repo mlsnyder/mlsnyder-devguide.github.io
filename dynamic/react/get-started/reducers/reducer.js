@@ -19,8 +19,8 @@ export default (state, action) => {
         const newEndpointState = apiConsoleReducer(state[action.endpointId], action);
 
         return state.map((ep) => {
-                return ep.id === action.endpointId ? newEndpointState : ep;
-            });
+            return ep.id === action.endpointId ? newEndpointState : ep;
+        });
     default:
         return state;
     }

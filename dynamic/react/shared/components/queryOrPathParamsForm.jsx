@@ -19,7 +19,7 @@ const QueryOrPathParamsForm = ({endpoint, paramType, params, onInputChange, onSu
             }
         }>
         {endpoint.consoleViewFreeEdit ?
-            <fieldset disabled>
+            <fieldset disabled='true'>
             <h4 className={'api-console-section-header'}>{paramType === PARAM_TYPES.QUERY_STRING ? 'Query String' : 'Path Parameters'}</h4>
             {Object.keys(params).map((key, i) => {
                 return (

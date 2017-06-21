@@ -163,7 +163,7 @@ const buildInitialPostBodyData = (body, showExcludedPostBodyFields) => {
         return [buildInitialPostBodyData(body.items, showExcludedPostBodyFields)];
     }
     const objBody = Object.keys(body).filter((n) => n !== 'required' && n !== 'isExcluded').reduce((accum, propName) => {
-        return { ...accum,
+        return {...accum,
             [propName]: buildInitialPostBodyData(body[propName], showExcludedPostBodyFields)
         };
     }, {});

@@ -16,7 +16,7 @@ const PostBodyForm = (props) => (
             }
         }>
         {props.endpoint.consoleViewFreeEdit ?
-        <fieldset disabled>
+        <fieldset disabled='true'>
                 <PostBodyFormItem
                     canRemove={false}
                     displayName={'Post Body'}
@@ -65,6 +65,7 @@ PostBodyForm.propTypes = {
         sampleAuthHeader: PropTypes.string,
         path: PropTypes.string.isRequired,
         action: PropTypes.string.isRequired,
+        consoleViewFreeEdit: PropTypes.bool.isRequired,
         queryString: PropTypes.objectOf(
             PropTypes.shape({
                 description: PropTypes.string,

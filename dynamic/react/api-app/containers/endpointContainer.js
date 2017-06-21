@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch) => {
              */
             if (endpoint.consoleViewFreeEdit) {
                 try {
-                    const text = JSON.parse(endpoint.requestInput);
+                    JSON.parse(endpoint.requestInput);
                     // create either a proxied or normal API request
                     let apiRequest;
 

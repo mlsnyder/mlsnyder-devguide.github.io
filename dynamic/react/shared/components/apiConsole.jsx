@@ -53,6 +53,7 @@ ApiConsole.propTypes = {
         sampleAuthHeader: PropTypes.string,
         path: PropTypes.string.isRequired,
         action: PropTypes.string.isRequired,
+        apiConsoleLoading: PropTypes.bool.isRequired,
         queryString: PropTypes.objectOf(
             PropTypes.shape({
                 description: PropTypes.string,
