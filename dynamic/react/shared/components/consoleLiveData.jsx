@@ -123,8 +123,8 @@ const PostHelper = ({action, endpoint, highlightedInputs, onConsoleToggledFreeEd
                     }}>{'Console'}</a></li>
                 </ul>
                 <div className={'tab-content'}>
-                    <div className={'code-snippet-tabcontent active'} id={'console_input_readOnly'}><pre dangerouslySetInnerHTML={{__html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null)}} /></div>
-                    <div className={'code-snippet-tabcontent'} id={'console_input_freeEdit'}><textarea className={'code-snipet-console'} id={'console_input'} onChange={() => {
+                    <div className={'code-snippet code-snippet-tabcontent active'} id={'console_input_readOnly'}><pre dangerouslySetInnerHTML={{__html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null)}} /></div>
+                    <div className={'code-snippet code-snippet-tabcontent'} id={'console_input_freeEdit'}><textarea className={'code-snipet-console'} id={'console_input'} onChange={() => {
                         onRequestChanged(endpoint.id, document.getElementById('console_input').value);
                     }} value={endpoint.requestInput} /></div>
                 </div>
