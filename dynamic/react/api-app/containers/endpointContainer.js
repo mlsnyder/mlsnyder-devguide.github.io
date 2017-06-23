@@ -16,21 +16,20 @@ const mapDispatchToProps = (dispatch) => {
         onFillConsoleSampleData: (endpointId) => {
             dispatch(actions.fillConsoleSampleData(endpointId));
         },
-        onSubmitConsoleRequest: (endpoint) => {
+        onSubmitConsoleRequest: (endpoint, userProfile) => {
             /* If our endpoint has a defined proxy, use that to make our API console request
             * Otherwise, just use the path specified as `host` in Swagger file
             */
             // Api Reference has complex pathParam/queryString structure (example, fieldType, etc.)
             // Just want key value pairs that our recipes use
             if (endpoint.consoleViewFreeEdit && endpoint.consoleError) {
-                // Show Animation here until promise or isLoading comes back or w/e
-                // dispatch(actions.consoleLoadingAnimation(endpoint.id)); --> this doesn't actually shwoing to loading animation due to the fast dispatches
                 dispatch(actions.consoleError(endpoint.id));
             } else {
                 // create either a proxied or normal API request
                 let apiRequest;
 
-                if (endpoint.proxy) {
+                if (endpoint.proxy &&
+                    !(userProfile && userProfile.toggled)) {
                     // Api Reference has complex pathParam/queryString structure (example, fieldType, etc.)
                     // Just want key value pairs that our recipes use
                     apiRequest = submitProxiedRequest.bind(null, {
@@ -43,10 +42,9 @@ const mapDispatchToProps = (dispatch) => {
                     });
                 } else {
                     const url = (endpoint.pathParams ? replaceStringPlaceholders(endpoint.path, reduceParamsToKeyValuePair(endpoint.pathParams)) : endpoint.path) + (endpoint.qsPath || '');
-
                     const postBody = endpoint.postBody || null;
 
-                    apiRequest = submitApiRequest.bind(null, url, endpoint.action, postBody);
+                    apiRequest = submitApiRequest.bind(null, url, endpoint.action, postBody, userProfile);
                 }
                 // Show Animation here until promise or isLoading comes back or w/e
                 dispatch(actions.consoleLoadingAnimation(endpoint.id));
@@ -86,6 +84,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onRemovePostbodyCollectionItem: (paramName, endpointId) => {
             dispatch(actions.removePostbodyCollectionItem(paramName, endpointId));
+        },
+        onToggleAiForRequest: () => {
+            dispatch(actions.toggleAiForRequest());
         },
         onToggleShowExcludedPostBodyProps: (endpointId) => {
             dispatch(actions.toggleShowExcludedPostBodyProps(endpointId));

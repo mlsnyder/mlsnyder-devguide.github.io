@@ -156,10 +156,18 @@ PostHelper.propTypes = {
     request: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string])
 };
 
-const ConsoleLiveData = ({action, consoleLoading, endpoint, highlightedInputs, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, onRequestChanged, path, request, response}) => {
+const ConsoleLiveData = ({action, consoleLoading, endpoint, highlightedInputs, onConsoleToggledFreeEdit, onConsoleToggledReadOnly, onRequestChanged, onToggleAiForRequest, path, request, response, userProfile}) => {
     return (
         <div>
-            <h5 className={'console-output-header'}>{'API Endpoint'}</h5>
+            <h5 className={'console-output-header'}>
+                <span>{'API Endpoint'}</span>
+                {userProfile ?
+                    <span className={'pull-right'}>
+                        {'Use token'}&nbsp;
+                        <input className={'toggle-ai-creds'} onClick={onToggleAiForRequest} type={'checkbox'} value={''} />
+                    </span> : null
+                }
+            </h5>
                 <div className={'code-snippet-plaintext'}>{path}</div>
                 <h5 className={'console-output-header'}>{'Method'}</h5>
                 <div className={'code-snippet-plaintext'}>{action.toUpperCase()}</div>
@@ -212,6 +220,7 @@ ConsoleLiveData.propTypes = {
     onConsoleToggledFreeEdit: PropTypes.func.isRequired,
     onConsoleToggledReadOnly: PropTypes.func.isRequired,
     onRequestChanged: PropTypes.func.isRequired,
+    onToggleAiForRequest: PropTypes.func.isRequest,
     path: PropTypes.string.isRequired,
     /* Not required, as a GET might not require any input (e.g. LandedCost `validateCredentials` route) */
     request: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string]),
@@ -222,7 +231,8 @@ ConsoleLiveData.propTypes = {
         body: PropTypes.oneOfType([
             PropTypes.object, PropTypes.array
         ]).isRequired
-    })
+    }),
+    userProfile: PropTypes.bool.isRequired
 };
 
 export default ConsoleLiveData;

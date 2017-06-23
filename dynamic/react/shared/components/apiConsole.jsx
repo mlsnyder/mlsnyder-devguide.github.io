@@ -28,9 +28,11 @@ const ApiConsole = (props) => {
                     onConsoleToggledFreeEdit={props.onConsoleToggledFreeEdit}
                     onConsoleToggledReadOnly={props.onConsoleToggledReadOnly}
                     onRequestChanged={props.onRequestChanged}
+                    onToggleAiForRequest={props.onToggleAiForRequest}
                     path={props.endpoint.path}
                     request={getRequest(props.endpoint)}
-                    response={props.endpoint.apiResponse} />
+                    response={props.endpoint.apiResponse}
+                    userProfile={Boolean(props.userProfile)} />
             </div>
         </div>
     );
@@ -83,7 +85,9 @@ ApiConsole.propTypes = {
     onRequestChanged: PropTypes.func.isRequired,
     onResetConsole: PropTypes.func.isRequired,
     onSubmitConsoleRequest: PropTypes.func.isRequired,
-    onToggleShowExcludedPostBodyProps: PropTypes.func.isRequired
+    onToggleAiForRequest: PropTypes.func.isRequest,
+    onToggleShowExcludedPostBodyProps: PropTypes.func.isRequired,
+    userProfile: PropTypes.object
 };
 
 export default ApiConsole;
