@@ -15,19 +15,33 @@ const PostBodyForm = (props) => (
                 props.onSubmitConsoleRequest(props.endpoint);
             }
         }>
-            {
-                <PostBodyFormItem
-                    canRemove={false}
-                    displayName={'Post Body'}
-                    endpointId={props.endpoint.id}
-                    itemSchema={props.endpoint.requestSchema}
-                    itemValue={props.endpoint.postBody}
-                    name={''}
-                    onAddItemToPostbodyCollection={props.onAddItemToPostbodyCollection}
-                    onPostBodyInputChanged={props.onPostBodyInputChanged}
-                    onRemovePostbodyCollectionItem={props.onRemovePostbodyCollectionItem}
-                    showExcludedPostBodyFields={props.endpoint.showExcludedPostBodyFields}
-                />
+            {props.endpoint.consoleViewFreeEdit ?
+            <fieldset disabled='true'>
+                    <PostBodyFormItem
+                        canRemove={false}
+                        displayName={'Post Body'}
+                        endpointId={props.endpoint.id}
+                        itemSchema={props.endpoint.requestSchema}
+                        itemValue={props.endpoint.postBody}
+                        name={''}
+                        onAddItemToPostbodyCollection={props.onAddItemToPostbodyCollection}
+                        onPostBodyInputChanged={props.onPostBodyInputChanged}
+                        onRemovePostbodyCollectionItem={props.onRemovePostbodyCollectionItem}
+                        showExcludedPostBodyFields={props.endpoint.showExcludedPostBodyFields}
+                    />
+            </fieldset> :
+            <PostBodyFormItem
+                        canRemove={false}
+                        displayName={'Post Body'}
+                        endpointId={props.endpoint.id}
+                        itemSchema={props.endpoint.requestSchema}
+                        itemValue={props.endpoint.postBody}
+                        name={''}
+                        onAddItemToPostbodyCollection={props.onAddItemToPostbodyCollection}
+                        onPostBodyInputChanged={props.onPostBodyInputChanged}
+                        onRemovePostbodyCollectionItem={props.onRemovePostbodyCollectionItem}
+                        showExcludedPostBodyFields={props.endpoint.showExcludedPostBodyFields}
+                    />
             }
             <input style={{display: 'none'}} type={'submit'} value={'submit'}/>
         </form>
@@ -51,6 +65,7 @@ PostBodyForm.propTypes = {
         sampleAuthHeader: PropTypes.string,
         path: PropTypes.string.isRequired,
         action: PropTypes.string.isRequired,
+        consoleViewFreeEdit: PropTypes.bool.isRequired,
         queryString: PropTypes.objectOf(
             PropTypes.shape({
                 description: PropTypes.string,
