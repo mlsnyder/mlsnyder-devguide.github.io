@@ -117,10 +117,10 @@ const PostHelper = ({action, endpoint, highlightedInputs, onConsoleToggledFreeEd
                 <ul className={'nav nav-tabs'} id={'console-tabs'}>
                     <li className={'nav'} id={'FE'}><a data-toggle={'tab'} href={'#console_input_freeEdit'} onClick={() => {
                         onConsoleToggledFreeEdit(endpoint.id);
-                    }}>{'Editor'}</a></li>
+                    }}><i className={'glyphicon glyphicon-pencil'}/>{' Editor'}</a></li>
                     <li className={'nav active'} id={'RO'}><a data-toggle={'tab'} href={'#console_input_readOnly'} onClick={() => {
                         onConsoleToggledReadOnly(endpoint.id);
-                    }}>{'Console'}</a></li>
+                    }}><i className={'glyphicon'}/>{'Console'}</a></li>
                 </ul>
                 <div className={'tab-content'}>
                     <div className={'code-snippet code-snippet-tabcontent reqScroll active'} id={'console_input_readOnly'}><pre dangerouslySetInnerHTML={{__html: syntaxHighlight(request, highlightedInputs ? highlightedInputs.map((f) => f.field) : null)}} /></div>
