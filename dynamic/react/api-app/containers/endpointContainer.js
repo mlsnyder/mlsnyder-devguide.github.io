@@ -29,6 +29,8 @@ const mapDispatchToProps = (dispatch) => {
              */
             if (endpoint.consoleViewFreeEdit) {
                 try {
+                    // JSON PARSE
+                    // instead of parsing... we shoud just check if(endpoint.consoleError) => dispatch(actions.consoleError(endpoint.id)); otherwise keep doing the same thing */
                     JSON.parse(endpoint.requestInput);
                     // create either a proxied or normal API request
                     let apiRequest;
@@ -136,3 +138,6 @@ const EndpointContainer = connect(
 )(EndpointComponent);
 
 export default EndpointContainer;
+
+// changed this class
+

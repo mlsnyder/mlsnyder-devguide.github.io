@@ -147,3 +147,4 @@ QueryOrPathParamsForm.propTypes = {
 };
 
 export default QueryOrPathParamsForm;
+// changed this class

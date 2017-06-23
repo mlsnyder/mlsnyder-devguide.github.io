@@ -36,7 +36,6 @@ module.exports = {
                 browser.assert.ok(deepEqual(req, expectedRequest),
                     "request for 'try it now' matches expected request");
             })
-
             .click('#getTax-console-body .submit')
             .getConsoleText('getTax', 'responseConsole', function(res) {
                 browser.assert.ok(deepEqual(res, expectedResponse),

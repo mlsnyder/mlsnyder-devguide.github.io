@@ -25,3 +25,4 @@ export default (state, action) => {
         return state;
     }
 };
+// changed this class

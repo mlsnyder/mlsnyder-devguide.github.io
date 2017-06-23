@@ -102,3 +102,4 @@ const App = connect(
 )(SampleConsoles);
 
 export default App;
+// changed this class

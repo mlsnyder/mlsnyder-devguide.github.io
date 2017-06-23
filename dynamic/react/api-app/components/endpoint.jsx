@@ -90,3 +90,5 @@ EndPointComponent.propTypes = {
 };
 
 export default EndPointComponent;
+
+// changed this class

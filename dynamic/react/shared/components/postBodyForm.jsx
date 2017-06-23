@@ -95,3 +95,4 @@ PostBodyForm.propTypes = {
 };
 
 export default PostBodyForm;
+// changed this class

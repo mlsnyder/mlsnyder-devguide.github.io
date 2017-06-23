@@ -228,3 +228,4 @@ ConsoleLiveData.propTypes = {
 };
 
 export default ConsoleLiveData;
+// changed this class

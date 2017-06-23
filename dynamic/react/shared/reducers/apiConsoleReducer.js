@@ -181,6 +181,7 @@ export default (state, action) => {
     case actionTypes.REQUEST_CHANGED:
         newState.requestInput = action.newValue;
         try {
+            // JSON parse
             const postBody = JSON.parse(action.newValue);
 
             newState.postBody = postBody;
@@ -192,6 +193,7 @@ export default (state, action) => {
     case actionTypes.CONSOLE_TOGGLED_READ_ONLY:
         newState.consoleViewFreeEdit = false;
         newState.consoleError = false;
+        /* when set the toggle to readOnly => reset newState.requestInput = undefined*/
         break;
     case actionTypes.CONSOLE_TOGGLED_FREE_EDIT:
         newState.consoleViewFreeEdit = true;
@@ -241,3 +243,4 @@ export default (state, action) => {
 
     return newState;
 };
+// changed this class

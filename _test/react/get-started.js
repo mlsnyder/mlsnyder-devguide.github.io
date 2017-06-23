@@ -1664,3 +1664,5 @@ describe('getStarted Reducer', () => {
         });
     });
 });
+
+// changed this class

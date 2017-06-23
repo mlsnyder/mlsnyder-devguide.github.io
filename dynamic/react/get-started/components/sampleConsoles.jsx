@@ -38,3 +38,4 @@ SampleConsoles.propTypes = {
 };
 
 export default SampleConsoles;
+// changed this class
