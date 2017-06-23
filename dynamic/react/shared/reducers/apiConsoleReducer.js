@@ -136,8 +136,7 @@ export default (state, action) => {
         newState = fillOrRemoveSampleData(newState);
         newState.qsPath = buildQueryString(reduceParamsToKeyValuePair(newState.queryString));
         newState.curl = buildCurl(newState.sampleAuthHeader, newState);
-        // JSON stringify => could be making it slower?
-        newState.requestInput = JSON.stringify(newState.postBody);
+        newState.requestInput = JSON.stringify(newState.postBody, null, 2);
         newState.consoleError = false;
         break;
     case actionTypes.QUERY_STRING_CHANGED:
@@ -168,10 +167,7 @@ export default (state, action) => {
     case actionTypes.REQUEST_CHANGED:
         newState.requestInput = action.newValue;
         try {
-            // JSON parse
-            const postBody = JSON.parse(action.newValue);
-
-            newState.postBody = postBody;
+            newState.postBody = JSON.parse(action.newValue);
             newState.consoleError = false;
         } catch (e) {
             newState.consoleError = true;
@@ -180,7 +176,7 @@ export default (state, action) => {
     case actionTypes.CONSOLE_TOGGLED_READ_ONLY:
         newState.consoleViewFreeEdit = false;
         newState.consoleError = false;
-        /* when set the toggle to readOnly => reset newState.requestInput = undefined*/
+        newState.requestInput = undefined;
         break;
     case actionTypes.CONSOLE_TOGGLED_FREE_EDIT:
         newState.consoleViewFreeEdit = true;
@@ -189,6 +185,7 @@ export default (state, action) => {
     case actionTypes.CONSOLE_ERROR:
         newState.consoleError = true;
         newState.apiResponse = undefined;
+        newState.apiConsoleLoading = false;
         break;
     case actionTypes.ADD_ITEM_TO_POST_BODY_COLLECTION:
         // Re-initialize all bootstrap tooltips

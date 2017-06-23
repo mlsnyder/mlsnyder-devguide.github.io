@@ -22,44 +22,10 @@ const mapDispatchToProps = (dispatch) => {
             */
             // Api Reference has complex pathParam/queryString structure (example, fieldType, etc.)
             // Just want key value pairs that our recipes use
-            if (endpoint.consoleViewFreeEdit) {
-                try {
-                    // JSON PARSE
-                    // instead of parsing... we shoud just check if(endpoint.consoleError) => dispatch(actions.consoleError(endpoint.id)); otherwise keep doing the same thing */
-                    JSON.parse(endpoint.requestInput);
-                    // create either a proxied or normal API request
-                    let apiRequest;
-
-                    if (endpoint.proxy) {
-                        // Api Reference has complex pathParam/queryString structure (example, fieldType, etc.)
-                        // Just want key value pairs that our recipes use
-                        apiRequest = submitProxiedRequest.bind(null, {
-                            proxy: endpoint.proxy,
-                            action: endpoint.action,
-                            path: endpoint.path,
-                            queryString: reduceParamsToKeyValuePair(endpoint.queryString),
-                            pathParams: reduceParamsToKeyValuePair(endpoint.pathParams),
-                            postBody: endpoint.postBody || {}
-                        });
-                    } else {
-                        const url = (endpoint.pathParams ? replaceStringPlaceholders(endpoint.path, reduceParamsToKeyValuePair(endpoint.pathParams)) : endpoint.path) + (endpoint.qsPath || '');
-                        const postBody = endpoint.postBody || null;
-
-                        apiRequest = submitApiRequest.bind(null, url, endpoint.action, postBody);
-                    }
-                    // Show Animation here until promise or isLoading comes back or w/e
-                    dispatch(actions.consoleLoadingAnimation(endpoint.id));
-
-                    apiRequest()
-                        .then((apiResponse) => {
-                            dispatch(actions.submitConsoleRequest(endpoint.id, apiResponse.body, apiResponse.status, apiResponse.statusMessage));
-                        })
-                        .catch((err) => {
-                            dispatch(actions.submitConsoleRequest(endpoint.id, err, err.message, err.message));
-                        });
-                } catch (err) {
-                    dispatch(actions.consoleError(endpoint.id));
-                }
+            if (endpoint.consoleViewFreeEdit && endpoint.consoleError) {
+                // Show Animation here until promise or isLoading comes back or w/e
+                // dispatch(actions.consoleLoadingAnimation(endpoint.id)); --> this doesn't actually shwoing to loading animation due to the fast dispatches
+                dispatch(actions.consoleError(endpoint.id));
             } else {
                 // create either a proxied or normal API request
                 let apiRequest;
